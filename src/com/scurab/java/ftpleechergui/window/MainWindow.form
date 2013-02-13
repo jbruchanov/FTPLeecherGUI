@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.scurab.java.ftpleechergui.window.MainWindow">
+  <grid id="27dc6" binding="mContentPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="709" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="empty"/>
+    <children>
+      <toolbar id="ad75e" binding="mHeaderBar">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="bd576" class="javax.swing.JButton" binding="mOpenConnection">
+            <constraints/>
+            <properties>
+              <actionCommand value="OpenConnection"/>
+              <text resource-bundle="Labels" key="OpenConnection"/>
+              <toolTipText resource-bundle="Labels" key="OpenConnection"/>
+            </properties>
+          </component>
+          <component id="97804" class="javax.swing.JButton" binding="mDisconnect">
+            <constraints/>
+            <properties>
+              <text resource-bundle="Labels" key="Disconnect"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+      <vspacer id="1eef8">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <splitpane id="2266c">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties>
+          <dividerLocation value="300"/>
+          <dividerSize value="5"/>
+          <doubleBuffered value="false"/>
+          <orientation value="0"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <splitpane id="de22a">
+            <constraints>
+              <splitpane position="left"/>
+            </constraints>
+            <properties>
+              <dividerLocation value="453"/>
+              <dividerSize value="5"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <scrollpane id="6f143">
+                <constraints>
+                  <splitpane position="left"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="5a74f" class="javax.swing.JTable" binding="mLocalStorage">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <scrollpane id="4bc2a">
+                <constraints>
+                  <splitpane position="right"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="60857" class="javax.swing.JTable" binding="mFtpStorage">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </splitpane>
+          <component id="9529b" class="javax.swing.JTable" binding="mQueue">
+            <constraints>
+              <splitpane position="right"/>
+            </constraints>
+            <properties/>
+          </component>
+        </children>
+      </splitpane>
+      <toolbar id="a8567" binding="mStatusBar">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties>
+          <floatable value="false"/>
+          <focusable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="125c5" class="javax.swing.JProgressBar" binding="mProgressBar">
+            <constraints/>
+            <properties>
+              <indeterminate value="true"/>
+              <maximumSize width="50" height="12"/>
+              <visible value="false"/>
+            </properties>
+          </component>
+          <component id="29cf2" class="javax.swing.JLabel" binding="mStatusLabel">
+            <constraints/>
+            <properties>
+              <alignmentX value="0.5"/>
+              <text value="Ahojda"/>
+              <toolTipText value="Tooltip"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+    </children>
+  </grid>
+</form>
