@@ -18,14 +18,17 @@ public abstract class TableController extends BaseController {
 
     public TableController(JTable table) {
         mTable = table;
-
-        mTable.setFont(new Font(mTable.getFont().getFontName(), Font.PLAIN, 14));
-        mTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        mTable.setShowGrid(true);
-        mTable.setRowMargin(2);
-        mTable.setRowHeight(25);
+        onInitTable(mTable);
         mTable.setVisible(true);
         bind();
+    }
+
+    protected void onInitTable(JTable table){
+        table.setFont(new Font(table.getFont().getFontName(), Font.PLAIN, 14));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setShowGrid(true);
+        table.setRowMargin(2);
+        table.setRowHeight(25);
     }
 
     private void bind() {
@@ -70,5 +73,9 @@ public abstract class TableController extends BaseController {
 
     public void onRowDoubleClick(JTable table, int rowIndex) {
 
+    }
+
+    public Component getView(){
+        return mTable;
     }
 }

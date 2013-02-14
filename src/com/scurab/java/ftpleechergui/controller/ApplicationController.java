@@ -1,7 +1,10 @@
 package com.scurab.java.ftpleechergui.controller;
 
+import com.scurab.java.ftpleecher.FTPLeechMaster;
 import com.scurab.java.ftpleechergui.window.MainWindow;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -30,7 +33,7 @@ public class ApplicationController extends BaseController {
 
     public MainWindow onCreateMainWindow() {
         MainWindow mf = new MainWindow();
-        mf.setBounds(10, 10, 640, 480);
+        mf.setBounds(10, 10, 1024, 700);
         return mf;
     }
 
@@ -42,5 +45,10 @@ public class ApplicationController extends BaseController {
     @Override
     public void showProgress(boolean value) {
         mController.showProgress(value);
+    }
+
+    @Override
+    public Component getView() {
+        return mController.getView();
     }
 }

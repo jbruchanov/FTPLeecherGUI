@@ -31,6 +31,13 @@
             <constraints/>
             <properties>
               <text resource-bundle="Labels" key="Disconnect"/>
+              <toolTipText resource-bundle="Labels" key="Disconnect"/>
+            </properties>
+          </component>
+          <component id="2f2f4" class="javax.swing.JButton" binding="mDownload">
+            <constraints/>
+            <properties>
+              <text resource-bundle="Labels" key="Download"/>
             </properties>
           </component>
         </children>
@@ -92,12 +99,19 @@
               </scrollpane>
             </children>
           </splitpane>
-          <component id="9529b" class="javax.swing.JTable" binding="mQueue">
+          <scrollpane id="f11e6">
             <constraints>
               <splitpane position="right"/>
             </constraints>
             <properties/>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="9529b" class="javax.swing.JTable" binding="mQueue">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </splitpane>
       <toolbar id="a8567" binding="mStatusBar">

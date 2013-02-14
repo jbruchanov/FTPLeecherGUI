@@ -1,12 +1,18 @@
 package com.scurab.java.ftpleechergui.controller;
 
+import com.scurab.java.ftpleecher.FTPFactory;
+import com.scurab.java.ftpleecher.FTPLeechMaster;
+import com.scurab.java.ftpleecher.FactoryConfig;
 import com.scurab.java.ftpleechergui.window.MainWindow;
 import com.scurab.java.ftpleechergui.window.OpenConnectionDialog;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -23,6 +29,10 @@ public class MainWindowController extends BaseController {
     private LocalStorageController mStorageController;
 
     private FTPController mFtpController;
+
+    private DownloadController mDownloadController;
+
+    private FTPClient mFtpClient;
 
     public MainWindowController(MainWindow window) {
         mWindow = window;
@@ -45,34 +55,106 @@ public class MainWindowController extends BaseController {
         };
         mWindow.getOpenConnection().addActionListener(action);
         mWindow.getDisconnect().addActionListener(action);
+        mWindow.getDownload().addActionListener(action);
     }
 
     public void onAction(Object source, String action){
         if("OpenConnection".equals(action)){
+            //show open ftp connection dialog
             OpenConnectionDialog ocd = new OpenConnectionDialog(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try {
-                        OpenConnectionDialog o = (OpenConnectionDialog) e.getSource();
-                        String[] values = o.getValues();
-                        FTPClient fc = new FTPClient();
-                        fc.connect(values[0], Integer.parseInt(values[1]));
-                        fc.login(values[2], values[3]);
-                        mFtpController.setFTPClient(fc);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
+                    OpenConnectionDialog o = (OpenConnectionDialog) e.getSource();
+                    onOpenConnection(o.getValues());
                 }
             });
+            FactoryConfig[] saved = getSavedConnections();
+            if(saved != null && saved.length > 0){
+                ocd.initValues(getSavedConnections()[0]);
+            }
             ocd.setVisible(true);
         }else if("Disconnect".equals(action)){
-            mFtpController.setFTPClient(null);
+            closeConnection();
+        }else if("Download".equals(action)){
+            onDownload();
         }
+    }
+
+    private void onDownload() {
+        try {
+            FTPFile[] selection = mFtpController.getSelectedItems();
+            if (selection.length == 0) {
+                throw new Exception(getResourceLabel("NoSelectedItem"));
+            } else {
+                File to = mStorageController.getCurrentFolder();
+                if(to == null){
+                    throw new Exception(getResourceLabel("SelectDestination"));
+                }
+
+                String pwd = getFtpPwd();
+                mDownloadController.onDownloadItem(pwd, selection[0], to.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            showError(e.getMessage());
+        }
+    }
+
+    /**
+     * return ftp current folder
+     * @return
+     * @throws IOException
+     */
+    private String getFtpPwd() throws IOException {
+        String ftpPwd = null;
+
+        StringBuilder pwd = new StringBuilder(mFtpClient.printWorkingDirectory());
+        if(pwd.charAt(pwd.length()-1) == '\"'){
+            pwd.setLength(pwd.length()-1);
+        }
+        if(pwd.charAt(0) == '\"'){
+            ftpPwd = pwd.substring(1);
+        }
+
+        if(ftpPwd == null){
+            ftpPwd = pwd.toString();
+        }
+        return ftpPwd;
+    }
+
+    /**
+     * Open new connection
+     * @param config
+     */
+    public void onOpenConnection(FactoryConfig config) {
+        closeConnection();
+        try {
+          mFtpClient = FTPFactory.openFtpClient(config);
+          mFtpController.setFTPClient(mFtpClient);
+          saveConnections(config);
+          mDownloadController.setConfig(config.clone());
+        } catch (Exception e) {
+            showError(e.getMessage());
+        }
+    }
+
+    private void closeConnection(){
+        if (mFtpClient != null) {
+            try {
+                mFtpClient.disconnect();
+                mFtpClient = null;
+            } catch (IOException e) {
+                e.printStackTrace();
+                showStatusBarMessage(e.getMessage());
+                //ignore it
+            }
+        }
+        mFtpController.setFTPClient(null);
     }
 
     public void onCreate() {
         mStorageController = new LocalStorageController(mWindow.getLocalStorage());
         mFtpController = new FTPController(mWindow.getFtpStorage());
+        mDownloadController = new DownloadController(mWindow.getQueue(), application().getMaster());
     }
 
     @Override
@@ -88,5 +170,10 @@ public class MainWindowController extends BaseController {
     @Override
     public void showProgress(boolean value) {
         mWindow.getProgressBar().setVisible(value);
+    }
+
+    @Override
+    public Component getView() {
+        return mWindow;
     }
 }

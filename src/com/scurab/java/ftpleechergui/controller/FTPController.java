@@ -7,6 +7,7 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
@@ -42,15 +43,6 @@ public class FTPController extends TableController {
 //        mTable.setDefaultRenderer(ImageIcon.class, new FTPIconCellTableRenderer());
         bind();
         createMenu();
-        try {
-            FTPClient fc = new FTPClient();
-            fc.connect("ftp.scurab.com");
-            fc.login("scurab", "312148349fred+-");
-            setFTPClient(fc);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
     }
 
     private void bind() {
@@ -78,14 +70,6 @@ public class FTPController extends TableController {
     }
 
     public void setFTPClient(FTPClient client) {
-        if (mClient != null) {
-            try {
-                mClient.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-                //ignore it
-            }
-        }
         mClient = client;
         mTableModel.setFTPClient(mClient);
     }
@@ -101,5 +85,22 @@ public class FTPController extends TableController {
         FTPFile f = mTableModel.getItem(table.getSelectedRow());
         mMenu.setLabel(f != null ? f.getName() : "");
         mMenu.show(mTable, e.getX(), e.getY());
+    }
+
+    /**
+     * Return selected files
+     * @return
+     */
+    public FTPFile[] getSelectedItems() {
+        int[] rows = mTable.getSelectedRows();
+        FTPFile[] result = new FTPFile[rows.length];
+        for (int i = 0; i < rows.length; i++) {
+            result[i] = mTableModel.getItem(rows[i]);
+        }
+        return result;
+    }
+
+    public String getCurrentPath(){
+        return mTableModel.getCurrentPath();
     }
 }

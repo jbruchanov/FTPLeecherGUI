@@ -239,4 +239,8 @@ public class FTPStorageTableModel extends AbstractTableModel {
         }
     };
     //endregion
+
+    public String getCurrentPath() {
+        return mCurrentPath;
+    }
 }

@@ -12,26 +12,27 @@ import java.util.ResourceBundle;
  * To change this template use File | Settings | File Templates.
  */
 public class MainWindow extends JFrame {
+
+    //region UI
     private JPanel mContentPanel;
     private JTable mQueue;
-
     private JTable mLocalStorage;
     private JTable mFtpStorage;
     private JToolBar mHeaderBar;
     private JToolBar mStatusBar;
-
     private JLabel mStatusLabel;
-
     private JProgressBar mProgressBar;
-
     private JButton mOpenConnection;
-
     private JButton mDisconnect;
+    private JButton mDownload;
+
+    //endregion UI
 
     public MainWindow() throws HeadlessException {
         setContentPane(mContentPanel);
     }
 
+    //region UI getters
     public JTable getLocalStorage() {
         return mLocalStorage;
     }
@@ -58,6 +59,10 @@ public class MainWindow extends JFrame {
 
     public JButton getDisconnect() {
         return mDisconnect;
+    }
+
+    public JButton getDownload() {
+        return mDownload;
     }
 
     {
@@ -88,7 +93,11 @@ public class MainWindow extends JFrame {
         mHeaderBar.add(mOpenConnection);
         mDisconnect = new JButton();
         this.$$$loadButtonText$$$(mDisconnect, ResourceBundle.getBundle("Labels").getString("Disconnect"));
+        mDisconnect.setToolTipText(ResourceBundle.getBundle("Labels").getString("Disconnect"));
         mHeaderBar.add(mDisconnect);
+        mDownload = new JButton();
+        this.$$$loadButtonText$$$(mDownload, ResourceBundle.getBundle("Labels").getString("Download"));
+        mHeaderBar.add(mDownload);
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
         mContentPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JSplitPane splitPane1 = new JSplitPane();
@@ -109,8 +118,10 @@ public class MainWindow extends JFrame {
         splitPane2.setRightComponent(scrollPane2);
         mFtpStorage = new JTable();
         scrollPane2.setViewportView(mFtpStorage);
+        final JScrollPane scrollPane3 = new JScrollPane();
+        splitPane1.setRightComponent(scrollPane3);
         mQueue = new JTable();
-        splitPane1.setRightComponent(mQueue);
+        scrollPane3.setViewportView(mQueue);
         mStatusBar = new JToolBar();
         mStatusBar.setFloatable(false);
         mStatusBar.setFocusable(false);

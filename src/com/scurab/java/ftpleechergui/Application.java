@@ -1,5 +1,6 @@
 package com.scurab.java.ftpleechergui;
 
+import com.scurab.java.ftpleecher.FTPLeechMaster;
 import com.scurab.java.ftpleechergui.controller.ApplicationController;
 
 import java.util.ResourceBundle;
@@ -11,6 +12,8 @@ public class Application {
     private ResourceBundle mLables;
 
     private ApplicationController mAppController;
+
+    private FTPLeechMaster mMaster;
 
     public static void main(String[] args) {
         sSelf = new Application();
@@ -33,6 +36,8 @@ public class Application {
 
     public void start() {
         onLoadResources();
+        mMaster = new FTPLeechMaster();
+
         mAppController = new ApplicationController();
         mAppController.start();
     }
@@ -47,6 +52,10 @@ public class Application {
 
     public void showProgress(boolean value) {
         mAppController.showProgress(value);
+    }
+
+    public FTPLeechMaster getMaster(){
+        return mMaster;
     }
 }
 
