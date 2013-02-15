@@ -3,6 +3,7 @@ package com.scurab.java.ftpleechergui.model;
 import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleecher.FTPDownloadThread;
 import com.scurab.java.ftpleechergui.Application;
+import com.scurab.java.ftpleechergui.TextUtils;
 import com.scurab.java.ftpleechergui.adapter.FTPMasterTableAdapter;
 
 import javax.swing.table.AbstractTableModel;
@@ -31,11 +32,10 @@ public class DownloadTableModel extends AbstractTableModel {
 
     private FTPMasterTableAdapter mAdapter;
 
-    private static DecimalFormat NUMBER_FORMAT = new DecimalFormat();
+
 
     public DownloadTableModel(FTPMasterTableAdapter adapter) {
-        NUMBER_FORMAT.setGroupingSize(3);
-        NUMBER_FORMAT.setGroupingUsed(true);
+
 
         adapter.registerObserver(this);
         mAdapter = adapter;
@@ -60,10 +60,10 @@ public class DownloadTableModel extends AbstractTableModel {
             case 1: return thread.getFtpState();
             case 2: return config.fileName;
             case 3: return thread.getPart() != -1 ? String.format("%03d",thread.getPart()) : "";
-            case 4: return getNumberReadable(config.currentPieceLength);
-            case 5: return getNumberReadable((int)thread.getDownloaded());
+            case 4: return TextUtils.getNumberReadable(config.currentPieceLength);
+            case 5: return TextUtils.getNumberReadable((int)thread.getDownloaded());
             case 6: return ((int)((thread.getDownloaded() / (float)config.currentPieceLength)*100)) + "%";
-            case 7: return getSpeedReadable(thread.getSpeed());
+            case 7: return TextUtils.getSpeedReadable(thread.getSpeed());
             case 8: return getException(thread.getException());
             default:
                 return "Not implemented";
@@ -90,18 +90,5 @@ public class DownloadTableModel extends AbstractTableModel {
         }
     }
 
-    private static String getNumberReadable(int value){
-        return NUMBER_FORMAT.format(value);
-    }
 
-    private static String getSpeedReadable(int value){
-        if(value > 1000000){
-            return String.format("%.2f MiB/s", (value / 1000000f));
-        }
-        else if(value > 1000){
-            return String.format("%.0f KiB/s", (value / 1000f));
-        }else{
-            return value + " B/s";
-        }
-    }
 }

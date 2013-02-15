@@ -3,15 +3,19 @@ package com.scurab.java.ftpleechergui.controller;
 import com.scurab.java.ftpleecher.FTPConnection;
 import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleecher.FTPFactory;
+import com.scurab.java.ftpleecher.FTPLeechMaster;
+import com.scurab.java.ftpleechergui.TextUtils;
 import com.scurab.java.ftpleechergui.window.MainWindow;
 import com.scurab.java.ftpleechergui.window.OpenConnectionDialog;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.time.TimeTCPClient;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,6 +37,8 @@ public class MainWindowController extends BaseController {
     private DownloadController mDownloadController;
 
     private FTPClient mFtpClient;
+
+    private FTPLeechMaster mMaster;
 
     public MainWindowController(MainWindow window) {
         mWindow = window;
@@ -154,7 +160,15 @@ public class MainWindowController extends BaseController {
     public void onCreate() {
         mStorageController = new LocalStorageController(mWindow.getLocalStorage());
         mFtpController = new FTPController(mWindow.getFtpStorage());
-        mDownloadController = new DownloadController(mWindow.getQueue(), application().getMaster());
+        mMaster = application().getMaster();
+        mDownloadController = new DownloadController(mWindow.getQueue(), mMaster);
+        Timer t = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mWindow.getGlobalSpeed().setText(TextUtils.getSpeedReadable(mMaster.getCurrentDownloadSpeed()));
+            }
+        });
+        t.start();
     }
 
     @Override

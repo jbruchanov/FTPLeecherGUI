@@ -138,8 +138,31 @@
             <constraints/>
             <properties>
               <alignmentX value="0.5"/>
-              <text value="Ahojda"/>
+              <text value=""/>
               <toolTipText value="Tooltip"/>
+            </properties>
+          </component>
+          <component id="c47" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <vspacer id="3a9ea">
+            <constraints/>
+          </vspacer>
+          <component id="50e03" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <alignmentX value="0.0"/>
+              <minimumSize width="30" height="14"/>
+              <preferredSize width="50" height="14"/>
+              <text resource-bundle="Labels" key="Speed"/>
+            </properties>
+          </component>
+          <component id="10dfe" class="javax.swing.JLabel" binding="mGlobalSpeed">
+            <constraints/>
+            <properties>
+              <preferredSize width="60" height="14"/>
+              <text value=""/>
             </properties>
           </component>
         </children>

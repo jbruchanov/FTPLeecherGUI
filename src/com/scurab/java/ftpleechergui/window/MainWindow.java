@@ -25,6 +25,7 @@ public class MainWindow extends JFrame {
     private JButton mOpenConnection;
     private JButton mDisconnect;
     private JButton mDownload;
+    private JLabel mGlobalSpeed;
 
     //endregion UI
 
@@ -63,6 +64,10 @@ public class MainWindow extends JFrame {
 
     public JButton getDownload() {
         return mDownload;
+    }
+
+    public JLabel getGlobalSpeed() {
+        return mGlobalSpeed;
     }
 
     {
@@ -133,9 +138,50 @@ public class MainWindow extends JFrame {
         mStatusBar.add(mProgressBar);
         mStatusLabel = new JLabel();
         mStatusLabel.setAlignmentX(0.5f);
-        mStatusLabel.setText("Ahojda");
+        mStatusLabel.setText("");
         mStatusLabel.setToolTipText("Tooltip");
         mStatusBar.add(mStatusLabel);
+        final JToolBar.Separator toolBar$Separator1 = new JToolBar.Separator();
+        mStatusBar.add(toolBar$Separator1);
+        final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
+        mStatusBar.add(spacer2);
+        final JLabel label1 = new JLabel();
+        label1.setAlignmentX(0.0f);
+        label1.setMinimumSize(new Dimension(30, 14));
+        label1.setPreferredSize(new Dimension(50, 14));
+        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("Labels").getString("Speed"));
+        mStatusBar.add(label1);
+        mGlobalSpeed = new JLabel();
+        mGlobalSpeed.setPreferredSize(new Dimension(60, 14));
+        mGlobalSpeed.setText("");
+        mStatusBar.add(mGlobalSpeed);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private void $$$loadLabelText$$$(JLabel component, String text) {
+        StringBuffer result = new StringBuffer();
+        boolean haveMnemonic = false;
+        char mnemonic = '\0';
+        int mnemonicIndex = -1;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '&') {
+                i++;
+                if (i == text.length()) break;
+                if (!haveMnemonic && text.charAt(i) != '&') {
+                    haveMnemonic = true;
+                    mnemonic = text.charAt(i);
+                    mnemonicIndex = result.length();
+                }
+            }
+            result.append(text.charAt(i));
+        }
+        component.setText(result.toString());
+        if (haveMnemonic) {
+            component.setDisplayedMnemonic(mnemonic);
+            component.setDisplayedMnemonicIndex(mnemonicIndex);
+        }
     }
 
     /**
