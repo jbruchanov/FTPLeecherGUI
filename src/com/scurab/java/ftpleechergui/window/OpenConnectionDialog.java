@@ -1,7 +1,7 @@
 package com.scurab.java.ftpleechergui.window;
 
-import com.scurab.java.ftpleecher.FTPFactory;
-import com.scurab.java.ftpleecher.FactoryConfig;
+import com.scurab.java.ftpleecher.FTPConnection;
+import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleechergui.TextUtils;
 
 import javax.swing.*;
@@ -63,8 +63,8 @@ public class OpenConnectionDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public FactoryConfig getValues() {
-        FactoryConfig fc = new FactoryConfig();
+    public FTPConnection getValues() {
+        FTPConnection fc = new FTPConnection();
         fc.server = mServer.getText();
         try {
             fc.port = Integer.parseInt(mPort.getText());
@@ -77,7 +77,7 @@ public class OpenConnectionDialog extends JDialog {
         return fc;
     }
 
-    public void initValues(FactoryConfig config) {
+    public void initValues(FTPConnection config) {
         mServer.setText(TextUtils.nz(config.server, ""));
         mPort.setText(String.valueOf(config.port));
         mUsername.setText(TextUtils.nz(config.username, ""));

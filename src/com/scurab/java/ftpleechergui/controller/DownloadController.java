@@ -6,6 +6,9 @@ import com.scurab.java.ftpleechergui.model.DownloadTableModel;
 import org.apache.commons.net.ftp.FTPFile;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ public class DownloadController extends TableController {
 
     private FTPLeechMaster mMaster;
 
-    private FactoryConfig mConfig;
+    private FTPConnection mConfig;
 
     private List<DownloadTask> mTasks = new ArrayList<DownloadTask>();
 
@@ -42,14 +45,45 @@ public class DownloadController extends TableController {
         mAdapter = new FTPMasterTableAdapter(mMaster);
         mTableModel = new DownloadTableModel(mAdapter);
         mTable.setModel(mTableModel);
+        setWidths();
+    }
+
+    private void setWidths(){
+        /*
+        0 Index
+        1 State
+        2 FileName
+        3 Part
+        4 Size
+        5 Downloaded
+        6 percents
+        7 Speed
+        8 Error
+     */
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+
+        int[] widths = new int[]{50, 150, -1, 50, 150, 150, 100, 100, -1};
+        DefaultTableCellRenderer[] renderers = new DefaultTableCellRenderer[]{
+                center, center, null, center, center, center, center, center, null
+        };
+
+        for(int i = 0;i<widths.length;i++){
+            TableColumn tcm = mTable.getColumnModel().getColumn(i);
+            int w = widths[i];
+            if(w > -1){
+                tcm.setMaxWidth(w);
+            }
+            if(renderers[i] != null){
+                tcm.setCellRenderer(renderers[i]);
+            }
+        }
     }
 
     @Override
     protected void onInitTable(JTable table) {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setShowGrid(true);
-        table.setRowMargin(2);
-        table.setRowHeight(25);
     }
 
     public void onDownloadItem(String ftpFolder, FTPFile file, String destFolder) throws IOException, FatalFTPException {
@@ -59,12 +93,12 @@ public class DownloadController extends TableController {
         mMaster.enqueue(task);
     }
 
-    public FactoryConfig getConfig() {
+    public FTPConnection getConfig() {
         return mConfig;
     }
 
-    public void setConfig(FactoryConfig config) {
+    public void setConfig(FTPConnection config) {
         mConfig = config;
-        mFactory = new FTPFactory(mConfig);
+        mFactory = new FTPFactory(new FTPContext(config));
     }
 }

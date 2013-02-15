@@ -1,8 +1,8 @@
 package com.scurab.java.ftpleechergui.controller;
 
 import com.google.gson.*;
-import com.scurab.java.ftpleecher.FTPFactory;
-import com.scurab.java.ftpleecher.FactoryConfig;
+import com.scurab.java.ftpleecher.FTPConnection;
+import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleechergui.Application;
 import org.apache.commons.io.IOUtils;
 
@@ -20,7 +20,7 @@ import java.io.*;
 public abstract class BaseController {
 
     public static final String CONNECTIONS_FILE = "connections.json";
-    private static FactoryConfig[] mSavedConnections;
+    private static FTPConnection[] mSavedConnections;
 
     private static final Gson sGson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -34,20 +34,20 @@ public abstract class BaseController {
      * Load saved connections from connections.json file
      * @return
      */
-    protected FactoryConfig[] onLoadSavedConnections() {
-        FactoryConfig[] result = null;
+    protected FTPConnection[] onLoadSavedConnections() {
+        FTPConnection[] result = null;
         try{
             File f = new File(CONNECTIONS_FILE);
             if(f.exists() && f.isFile()){
                 String values = IOUtils.toString(new FileInputStream(f));
-                result = sGson.fromJson(values, FactoryConfig[].class);
+                result = sGson.fromJson(values, FTPConnection[].class);
             }else{
-                result = new FactoryConfig[0];
+                result = new FTPContext[0];
             }
         }catch(Exception e){
             e.printStackTrace();
 //            showStatusBarMessage(e.getMessage());
-            result = new FactoryConfig[0];
+            result = new FTPContext[0];
         }
         return result;
     }
@@ -57,7 +57,7 @@ public abstract class BaseController {
      * @param values
      * @throws IOException
      */
-    public void saveConnections(FactoryConfig... values) throws IOException {
+    public void saveConnections(FTPConnection... values) throws IOException {
         File f = new File(CONNECTIONS_FILE);
         f.delete();
         FileOutputStream fos = new FileOutputStream(f);
@@ -66,7 +66,7 @@ public abstract class BaseController {
         fos.close();
     }
 
-    public FactoryConfig[] getSavedConnections(){
+    public FTPConnection[] getSavedConnections(){
         return mSavedConnections;
     }
 

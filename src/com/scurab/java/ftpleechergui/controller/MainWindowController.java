@@ -1,8 +1,8 @@
 package com.scurab.java.ftpleechergui.controller;
 
+import com.scurab.java.ftpleecher.FTPConnection;
+import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleecher.FTPFactory;
-import com.scurab.java.ftpleecher.FTPLeechMaster;
-import com.scurab.java.ftpleecher.FactoryConfig;
 import com.scurab.java.ftpleechergui.window.MainWindow;
 import com.scurab.java.ftpleechergui.window.OpenConnectionDialog;
 import org.apache.commons.net.ftp.FTPClient;
@@ -68,9 +68,9 @@ public class MainWindowController extends BaseController {
                     onOpenConnection(o.getValues());
                 }
             });
-            FactoryConfig[] saved = getSavedConnections();
+            FTPConnection[] saved = getSavedConnections();
             if(saved != null && saved.length > 0){
-                ocd.initValues(getSavedConnections()[0]);
+                ocd.initValues(saved[0]);
             }
             ocd.setVisible(true);
         }else if("Disconnect".equals(action)){
@@ -125,13 +125,13 @@ public class MainWindowController extends BaseController {
      * Open new connection
      * @param config
      */
-    public void onOpenConnection(FactoryConfig config) {
+    public void onOpenConnection(FTPConnection config) {
         closeConnection();
         try {
           mFtpClient = FTPFactory.openFtpClient(config);
           mFtpController.setFTPClient(mFtpClient);
           saveConnections(config);
-          mDownloadController.setConfig(config.clone());
+          mDownloadController.setConfig(config);
         } catch (Exception e) {
             showError(e.getMessage());
         }

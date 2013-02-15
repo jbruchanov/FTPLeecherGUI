@@ -1,11 +1,12 @@
 package com.scurab.java.ftpleechergui.model;
 
+import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleecher.FTPDownloadThread;
-import com.scurab.java.ftpleecher.FactoryConfig;
 import com.scurab.java.ftpleechergui.Application;
 import com.scurab.java.ftpleechergui.adapter.FTPMasterTableAdapter;
 
 import javax.swing.table.AbstractTableModel;
+import java.text.DecimalFormat;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +31,12 @@ public class DownloadTableModel extends AbstractTableModel {
 
     private FTPMasterTableAdapter mAdapter;
 
+    private static DecimalFormat NUMBER_FORMAT = new DecimalFormat();
+
     public DownloadTableModel(FTPMasterTableAdapter adapter) {
+        NUMBER_FORMAT.setGroupingSize(3);
+        NUMBER_FORMAT.setGroupingUsed(true);
+
         adapter.registerObserver(this);
         mAdapter = adapter;
     }
@@ -42,28 +48,31 @@ public class DownloadTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 9;
     }
 
     @Override
     public Object getValueAt(int rowIndex, final int columnIndex) {
         final FTPDownloadThread thread = mAdapter.getItem(rowIndex);
-        final FactoryConfig config = thread.getConfig();
+        final FTPContext config = thread.getContext();
         switch (columnIndex){
             case 0: return thread.getIndex();
             case 1: return thread.getFtpState();
-            case 2: return config.filename;
-            case 3: return String.format("%03d",thread.getPart());
-            case 4: return config.pieceLength;
-            case 5: return thread.getDownloaded();
-            case 6: return ((int)((thread.getDownloaded() / (float)config.pieceLength)*100)) + "%";
+            case 2: return config.fileName;
+            case 3: return thread.getPart() != -1 ? String.format("%03d",thread.getPart()) : "";
+            case 4: return getNumberReadable(config.currentPieceLength);
+            case 5: return getNumberReadable((int)thread.getDownloaded());
+            case 6: return ((int)((thread.getDownloaded() / (float)config.currentPieceLength)*100)) + "%";
             case 7: return getSpeedReadable(thread.getSpeed());
-            case 8: return "";
+            case 8: return getException(thread.getException());
             default:
                 return "Not implemented";
         }
     }
 
+    private String getException(Throwable e){
+        return e != null ? e.getMessage() : "";
+    }
     @Override
     public String getColumnName(int column) {
         switch (column){
@@ -81,12 +90,16 @@ public class DownloadTableModel extends AbstractTableModel {
         }
     }
 
+    private static String getNumberReadable(int value){
+        return NUMBER_FORMAT.format(value);
+    }
+
     private static String getSpeedReadable(int value){
         if(value > 1000000){
             return String.format("%.2f MiB/s", (value / 1000000f));
         }
         else if(value > 1000){
-            return String.format("%.2f KiB/s", (value / 1000f));
+            return String.format("%.0f KiB/s", (value / 1000f));
         }else{
             return value + " B/s";
         }
