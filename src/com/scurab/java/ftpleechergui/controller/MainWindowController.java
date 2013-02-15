@@ -28,6 +28,8 @@ import java.io.IOException;
  */
 public class MainWindowController extends BaseController {
 
+    public static final int DELAY = 2000;
+
     private MainWindow mWindow;
 
     private LocalStorageController mStorageController;
@@ -89,7 +91,7 @@ public class MainWindowController extends BaseController {
     private void onDownload() {
         try {
             FTPFile[] selection = mFtpController.getSelectedItems();
-            if (selection.length == 0) {
+            if (selection.length == 0 || selection[0] == null) {
                 throw new Exception(getResourceLabel("NoSelectedItem"));
             } else {
                 File to = mStorageController.getCurrentFolder();
@@ -162,7 +164,7 @@ public class MainWindowController extends BaseController {
         mFtpController = new FTPController(mWindow.getFtpStorage());
         mMaster = application().getMaster();
         mDownloadController = new DownloadController(mWindow.getQueue(), mMaster);
-        Timer t = new Timer(2000, new ActionListener() {
+        Timer t = new Timer(DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mWindow.getGlobalSpeed().setText(TextUtils.getSpeedReadable(mMaster.getCurrentDownloadSpeed()));

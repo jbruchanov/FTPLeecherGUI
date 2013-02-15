@@ -126,6 +126,8 @@ public class MainWindow extends JFrame {
         final JScrollPane scrollPane3 = new JScrollPane();
         splitPane1.setRightComponent(scrollPane3);
         mQueue = new JTable();
+        mQueue.setAutoCreateRowSorter(false);
+        mQueue.setDoubleBuffered(true);
         scrollPane3.setViewportView(mQueue);
         mStatusBar = new JToolBar();
         mStatusBar.setFloatable(false);

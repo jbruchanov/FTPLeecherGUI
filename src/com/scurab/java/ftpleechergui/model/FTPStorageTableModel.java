@@ -166,7 +166,7 @@ public class FTPStorageTableModel extends AbstractTableModel {
             return name;
         }else if(columnIndex == 2){
              if(f != null && f.isFile()){
-                 return String.valueOf(f.getSize());
+                 return TextUtils.getNumberReadable((int)f.getSize());
              }
          }
         return null;

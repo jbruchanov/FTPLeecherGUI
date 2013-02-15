@@ -108,7 +108,10 @@
             <children>
               <component id="9529b" class="javax.swing.JTable" binding="mQueue">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <autoCreateRowSorter value="false"/>
+                  <doubleBuffered value="true"/>
+                </properties>
               </component>
             </children>
           </scrollpane>
