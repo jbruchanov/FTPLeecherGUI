@@ -12,13 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 20:52
- * To change this template use File | Settings | File Templates.
- */
 public class FileStorageTableModel extends AbstractTableModel {
 
     private File mRoot;

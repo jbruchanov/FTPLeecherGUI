@@ -3,19 +3,12 @@ package com.scurab.java.ftpleechergui.controller;
 import com.scurab.java.ftpleechergui.model.FileStorageTableModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 20:10
- * To change this template use File | Settings | File Templates.
- */
 public class LocalStorageController extends TableController {
 
     private JTable mTable;
+
     private FileStorageTableModel mTableModel;
 
     private File mCurrentFolder;

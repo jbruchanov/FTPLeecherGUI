@@ -14,13 +14,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 22:20
- * To change this template use File | Settings | File Templates.
- */
 public class FTPStorageTableModel extends AbstractTableModel {
 
     public interface OnFtpStorageEventListener {
@@ -30,8 +23,6 @@ public class FTPStorageTableModel extends AbstractTableModel {
     }
 
     private FTPClient mClient;
-
-    private FTPFile mRoot;
 
     private FTPFile[] mData;
 
@@ -44,7 +35,6 @@ public class FTPStorageTableModel extends AbstractTableModel {
     private boolean mIsRunning = true;
 
     private FTPFile mToLoad = null;
-
 
     private ImageIcon mFileIcon = new ImageIcon();
 
@@ -109,12 +99,12 @@ public class FTPStorageTableModel extends AbstractTableModel {
             } else {
                 mClient.cwd(root.getName());
             }
+
             mCurrentPath = mClient.printWorkingDirectory();
-//            data.addAll(Arrays.asList(mClient.listDirectories()));
             data.addAll(Arrays.asList(mClient.listFiles()));
             Collections.sort(data, mComparator);
+            //add null to first position to simulate ".." folder
             data.add(0, null);
-            mRoot = root;
             mToLoad = null;
         } catch (IOException e) {
             onError(e);
@@ -123,8 +113,9 @@ public class FTPStorageTableModel extends AbstractTableModel {
         onDataEvent(DataEvent.Finished);
         if (data != null) {
             return data.toArray(new FTPFile[data.size()]);
+        } else {
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -141,11 +132,11 @@ public class FTPStorageTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         if (column == 0) {
             return "";
-        } else if(column == 1){
+        } else if (column == 1) {
             return TextUtils.nz(mCurrentPath, Application.getLabels().getString("Dir"));
-        }else if(column == 2){
+        } else if (column == 2) {
             return Application.getLabels().getString("Size");
-        }else{
+        } else {
             return super.getColumnName(column);
         }
     }
@@ -154,21 +145,21 @@ public class FTPStorageTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         final FTPFile f = getItem(rowIndex);
-         if(columnIndex == 0){
+        if (columnIndex == 0) {
             if (f != null) {
                 return f.isDirectory() ? mFolderIcon : mFileIcon;
             }
-        }else if (columnIndex == 1) {
+        } else if (columnIndex == 1) {
             if (f == null) {
                 return "..";
             }
             String name = TextUtils.nz(f.getName(), f.toString());
             return name;
-        }else if(columnIndex == 2){
-             if(f != null && f.isFile()){
-                 return TextUtils.getNumberReadable((int)f.getSize());
-             }
-         }
+        } else if (columnIndex == 2) {
+            if (f != null && f.isFile()) {
+                return TextUtils.getNumberReadable((int) f.getSize());
+            }
+        }
         return null;
     }
 
@@ -223,9 +214,20 @@ public class FTPStorageTableModel extends AbstractTableModel {
         }
     }
 
+    /**
+     * Return current FTP path
+     *
+     * @return
+     */
+    public String getCurrentPath() {
+        return mCurrentPath;
+    }
 
     //region helpers
 
+    /**
+     * Sort comparator for sorting alphabetically and folders are before files
+     */
     private Comparator<? super FTPFile> mComparator = new Comparator<FTPFile>() {
         @Override
         public int compare(FTPFile o1, FTPFile o2) {
@@ -239,8 +241,4 @@ public class FTPStorageTableModel extends AbstractTableModel {
         }
     };
     //endregion
-
-    public String getCurrentPath() {
-        return mCurrentPath;
-    }
 }

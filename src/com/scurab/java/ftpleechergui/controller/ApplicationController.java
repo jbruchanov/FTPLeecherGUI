@@ -1,20 +1,12 @@
 package com.scurab.java.ftpleechergui.controller;
 
-import com.scurab.java.ftpleecher.FTPLeechMaster;
 import com.scurab.java.ftpleechergui.window.MainWindow;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 20:27
- * To change this template use File | Settings | File Templates.
- */
+
 public class ApplicationController extends BaseController {
 
     private MainWindowController mController;

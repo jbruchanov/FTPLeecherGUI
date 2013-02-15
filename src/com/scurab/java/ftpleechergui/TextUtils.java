@@ -2,13 +2,6 @@ package com.scurab.java.ftpleechergui;
 
 import java.text.DecimalFormat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 21:48
- * To change this template use File | Settings | File Templates.
- */
 public class TextUtils {
 
     private static DecimalFormat NUMBER_FORMAT = new DecimalFormat();
@@ -22,21 +15,39 @@ public class TextUtils {
         return v == null || v.length() == 0;
     }
 
+    /**
+     * <code>isNullOrEmpty(v) ? ifnull : v;</code>
+     *
+     * @param v
+     * @param ifnull
+     * @return
+     */
     public static String nz(String v, String ifnull) {
         return isNullOrEmpty(v) ? ifnull : v;
     }
 
-    public static String getNumberReadable(int value){
+    /**
+     * Returns more readable number where is space like thousands separator
+     *
+     * @param value
+     * @return
+     */
+    public static String getNumberReadable(int value) {
         return NUMBER_FORMAT.format(value);
     }
 
-    public static  String getSpeedReadable(int value){
-        if(value > 1000000){
+    /**
+     * Get speed like more human readable value, MiB/s, KiB/s or B/s
+     *
+     * @param value
+     * @return
+     */
+    public static String getSpeedReadable(int value) {
+        if (value > 1000000) {
             return String.format("%.2f MiB/s", (value / 1000000f));
-        }
-        else if(value > 1000){
+        } else if (value > 1000) {
             return String.format("%.0f KiB/s", (value / 1000f));
-        }else{
+        } else {
             return value + " B/s";
         }
     }

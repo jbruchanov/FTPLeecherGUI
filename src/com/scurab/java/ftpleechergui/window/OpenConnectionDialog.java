@@ -1,7 +1,6 @@
 package com.scurab.java.ftpleechergui.window;
 
 import com.scurab.java.ftpleecher.FTPConnection;
-import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleechergui.TextUtils;
 
 import javax.swing.*;

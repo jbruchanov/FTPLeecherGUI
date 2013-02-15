@@ -7,17 +7,8 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 20:10
- * To change this template use File | Settings | File Templates.
- */
 public class FTPController extends TableController {
 
     private JTable mTable;
@@ -40,7 +31,6 @@ public class FTPController extends TableController {
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
         mTable.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-//        mTable.setDefaultRenderer(ImageIcon.class, new FTPIconCellTableRenderer());
         bind();
         createMenu();
     }
@@ -74,7 +64,7 @@ public class FTPController extends TableController {
         mTableModel.setFTPClient(mClient);
     }
 
-    private void createMenu(){
+    private void createMenu() {
         mMenu = new JPopupMenu();
         mMenu.add(getResourceLabel("Open"));
         mMenu.add(getResourceLabel("Download"));
@@ -82,13 +72,14 @@ public class FTPController extends TableController {
 
     @Override
     public void onShowContextMenu(JTable table, MouseEvent e) {
-        FTPFile f = mTableModel.getItem(table.getSelectedRow());
-        mMenu.setLabel(f != null ? f.getName() : "");
-        mMenu.show(mTable, e.getX(), e.getY());
+//        FTPFile f = mTableModel.getItem(table.getSelectedRow());
+//        mMenu.setLabel(f != null ? f.getName() : "");
+//        mMenu.show(mTable, e.getX(), e.getY());
     }
 
     /**
      * Return selected files
+     *
      * @return
      */
     public FTPFile[] getSelectedItems() {
@@ -100,7 +91,7 @@ public class FTPController extends TableController {
         return result;
     }
 
-    public String getCurrentPath(){
+    public String getCurrentPath() {
         return mTableModel.getCurrentPath();
     }
 }

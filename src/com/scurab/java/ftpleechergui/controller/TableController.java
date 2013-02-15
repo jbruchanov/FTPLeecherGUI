@@ -5,13 +5,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 22:14
- * To change this template use File | Settings | File Templates.
- */
 public abstract class TableController extends BaseController {
 
     private JTable mTable;
@@ -23,7 +16,7 @@ public abstract class TableController extends BaseController {
         bind();
     }
 
-    protected void onInitTable(JTable table){
+    protected void onInitTable(JTable table) {
         table.setFont(new Font(table.getFont().getFontName(), Font.PLAIN, 14));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setShowGrid(true);
@@ -46,7 +39,7 @@ public abstract class TableController extends BaseController {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(e.getButton() == MouseEvent.BUTTON3){
+                if (e.getButton() == MouseEvent.BUTTON3) {
                     int r = mTable.rowAtPoint(e.getPoint());
                     if (r >= 0 && r < mTable.getRowCount()) {
                         mTable.setRowSelectionInterval(r, r);
@@ -67,15 +60,13 @@ public abstract class TableController extends BaseController {
         });
     }
 
-    public void onShowContextMenu(JTable table, MouseEvent e){
-
+    public void onShowContextMenu(JTable table, MouseEvent e) {
     }
 
     public void onRowDoubleClick(JTable table, int rowIndex) {
-
     }
 
-    public Component getView(){
+    public Component getView() {
         return mTable;
     }
 }

@@ -8,19 +8,11 @@ import org.apache.commons.net.ftp.FTPFile;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 14.2.13
- * Time: 0:01
- * To change this template use File | Settings | File Templates.
- */
 public class DownloadController extends TableController {
 
     private JTable mTable;
@@ -48,7 +40,7 @@ public class DownloadController extends TableController {
         setWidths();
     }
 
-    private void setWidths(){
+    private void setWidths() {
         /*
         0 Index
         1 State
@@ -68,13 +60,13 @@ public class DownloadController extends TableController {
                 center, center, null, center, center, center, center, center, null
         };
 
-        for(int i = 0;i<widths.length;i++){
+        for (int i = 0; i < widths.length; i++) {
             TableColumn tcm = mTable.getColumnModel().getColumn(i);
             int w = widths[i];
-            if(w > -1){
+            if (w > -1) {
                 tcm.setMaxWidth(w);
             }
-            if(renderers[i] != null){
+            if (renderers[i] != null) {
                 tcm.setCellRenderer(renderers[i]);
             }
         }

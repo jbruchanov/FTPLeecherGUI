@@ -1,17 +1,16 @@
 package com.scurab.java.ftpleechergui.adapter;
 
-import com.scurab.java.ftpleecher.*;
+import com.scurab.java.ftpleecher.FTPDownloadThread;
+import com.scurab.java.ftpleecher.FTPLeechMaster;
+import com.scurab.java.ftpleecher.FatalFTPException;
+import com.scurab.java.ftpleecher.NotificationAdapter;
 import com.scurab.java.ftpleechergui.model.DownloadTableModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 13.2.13
- * Time: 22:10
- * To change this template use File | Settings | File Templates.
+ * Main bridge class for communication between {@link FTPLeechMaster} and {@link DownloadTableModel}
  */
 public class FTPMasterTableAdapter implements NotificationAdapter {
 
@@ -20,61 +19,80 @@ public class FTPMasterTableAdapter implements NotificationAdapter {
     private List<DownloadTableModel> mObservers;
 
     public FTPMasterTableAdapter(FTPLeechMaster master) {
-        if(master == null){
+        if (master == null) {
             throw new IllegalArgumentException("FTPLeechMaster is null!");
         }
         mMaster = master;
         mMaster.setNotificationAdapter(this);
     }
 
-    public FTPDownloadThread getItem(int index){
+    public FTPDownloadThread getItem(int index) {
         return mMaster.getItem(index);
     }
 
-    public int getItemsCount(){
+    public int getItemsCount() {
         return mMaster.size();
     }
 
+    /**
+     * Notify registered observers about big change in dataset
+     */
     @Override
-    public void performNotifyDataChanged(){
-        if(mObservers != null){
-            synchronized (mObservers){
-                for(DownloadTableModel ob : mObservers){
+    public void performNotifyDataChanged() {
+        if (mObservers != null) {
+            synchronized (mObservers) {
+                for (DownloadTableModel ob : mObservers) {
                     ob.fireTableDataChanged();
                 }
             }
         }
     }
 
+    /**
+     * Notify registered observers about change in one particular thread
+     *
+     * @param thread
+     */
     @Override
     public void performNotifyDataChanged(FTPDownloadThread thread) {
-        if(mObservers != null){
-            synchronized (mObservers){
+        if (mObservers != null) {
+            synchronized (mObservers) {
                 int index = thread.getIndex();
-                for(DownloadTableModel ob : mObservers){
+                for (DownloadTableModel ob : mObservers) {
                     ob.fireTableRowsUpdated(index, index);
                 }
             }
         }
     }
 
+    /**
+     * Register listener
+     *
+     * @param downloadTableModel
+     */
     public void registerObserver(DownloadTableModel downloadTableModel) {
-        if(mObservers == null){
+        if (mObservers == null) {
             mObservers = new ArrayList<DownloadTableModel>();
         }
-        synchronized (mObservers){
+        synchronized (mObservers) {
             mObservers.add(downloadTableModel);
         }
     }
 
-    public void unregisterObserver(DownloadTableModel downloadTableModel){
-        if(mObservers != null){
-            synchronized (mObservers){
+    /**
+     * Unregister listener
+     *
+     * @param downloadTableModel
+     */
+    public void unregisterObserver(DownloadTableModel downloadTableModel) {
+        if (mObservers != null) {
+            synchronized (mObservers) {
                 mObservers.remove(downloadTableModel);
             }
         }
     }
 
+    //region notifications
     @Override
     public void onError(FTPDownloadThread source, Exception e) {
         performNotifyDataChanged(source);
@@ -94,4 +112,7 @@ public class FTPMasterTableAdapter implements NotificationAdapter {
     public void onStatusChange(FTPDownloadThread source, FTPDownloadThread.State state) {
         performNotifyDataChanged(source);
     }
+
+    //endregion notifications
 }
+

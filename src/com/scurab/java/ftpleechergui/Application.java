@@ -5,6 +5,9 @@ import com.scurab.java.ftpleechergui.controller.ApplicationController;
 
 import java.util.ResourceBundle;
 
+/**
+ * Base application class
+ */
 public class Application {
 
     private static Application sSelf;
@@ -30,10 +33,18 @@ public class Application {
         return sSelf;
     }
 
+    /**
+     * ResourceBundle for lables
+     *
+     * @return
+     */
     public static ResourceBundle getLabels() {
         return sSelf.mLables;
     }
 
+    /**
+     * Start application
+     */
     public void start() {
         onLoadResources();
         mMaster = new FTPLeechMaster();
@@ -46,15 +57,31 @@ public class Application {
         mLables = ResourceBundle.getBundle("Labels");
     }
 
+    /**
+     * Shows message in mainwindows status bar
+     *
+     * @param msg
+     * @param type
+     */
     public void showStatusBarMessage(String msg, int type) {
         mAppController.showStatusBarMessage(msg, type);
     }
 
+    /**
+     * Set visibility for indtereminate progress bar in status bar
+     *
+     * @param value
+     */
     public void showProgress(boolean value) {
         mAppController.showProgress(value);
     }
 
-    public FTPLeechMaster getMaster(){
+    /**
+     * returns singleton of {@link FTPLeechMaster}
+     *
+     * @return
+     */
+    public FTPLeechMaster getMaster() {
         return mMaster;
     }
 }

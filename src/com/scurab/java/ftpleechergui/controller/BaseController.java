@@ -1,6 +1,7 @@
 package com.scurab.java.ftpleechergui.controller;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.scurab.java.ftpleecher.FTPConnection;
 import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleechergui.Application;
@@ -8,43 +9,41 @@ import org.apache.commons.io.IOUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Joe Scurab
- * Date: 12.2.13
- * Time: 20:21
- * To change this template use File | Settings | File Templates.
- */
 public abstract class BaseController {
 
     public static final String CONNECTIONS_FILE = "connections.json";
+
     private static FTPConnection[] mSavedConnections;
 
     private static final Gson sGson = new GsonBuilder().setPrettyPrinting().create();
 
     public BaseController() {
-        if(mSavedConnections == null){
+        if (mSavedConnections == null) {
             mSavedConnections = onLoadSavedConnections();
         }
     }
 
     /**
      * Load saved connections from connections.json file
+     *
      * @return
      */
     protected FTPConnection[] onLoadSavedConnections() {
         FTPConnection[] result = null;
-        try{
+        try {
             File f = new File(CONNECTIONS_FILE);
-            if(f.exists() && f.isFile()){
+            if (f.exists() && f.isFile()) {
                 String values = IOUtils.toString(new FileInputStream(f));
                 result = sGson.fromJson(values, FTPConnection[].class);
-            }else{
+            } else {
                 result = new FTPContext[0];
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 //            showStatusBarMessage(e.getMessage());
             result = new FTPContext[0];
@@ -54,6 +53,7 @@ public abstract class BaseController {
 
     /**
      * Save connections to connections.json file
+     *
      * @param values
      * @throws IOException
      */
@@ -66,7 +66,7 @@ public abstract class BaseController {
         fos.close();
     }
 
-    public FTPConnection[] getSavedConnections(){
+    public FTPConnection[] getSavedConnections() {
         return mSavedConnections;
     }
 
@@ -86,19 +86,19 @@ public abstract class BaseController {
         Application.getInstance().showProgress(value);
     }
 
-    public void showInfo(String msg){
+    public void showInfo(String msg) {
         showMessageBox(msg, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void showError(String msg){
+    public void showError(String msg) {
         showMessageBox(msg, JOptionPane.ERROR_MESSAGE);
     }
 
-    public void showMessageBox(String msg, int type){
+    public void showMessageBox(String msg, int type) {
         JOptionPane.showMessageDialog(getView(), msg, "", type);
     }
 
-    public Application application(){
+    public Application application() {
         return Application.getInstance();
     }
 
