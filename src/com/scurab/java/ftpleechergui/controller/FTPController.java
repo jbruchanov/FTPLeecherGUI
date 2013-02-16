@@ -86,4 +86,8 @@ public class FTPController extends TableController {
     public String getCurrentPath() {
         return mTableModel.getCurrentPath();
     }
+
+    public void reload() {
+        mTableModel.reload();
+    }
 }

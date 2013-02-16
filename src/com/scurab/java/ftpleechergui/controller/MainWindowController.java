@@ -59,6 +59,7 @@ public class MainWindowController extends BaseController {
         mWindow.getDisconnect().addActionListener(action);
         mWindow.getDownload().addActionListener(action);
         mWindow.getSettings().addActionListener(action);
+        mWindow.getReload().addActionListener(action);
     }
 
     public void onAction(Object source, String action) {
@@ -82,6 +83,8 @@ public class MainWindowController extends BaseController {
             onDownload();
         } else if ("Settings".equals(action)){
             onSettings();
+        } else if ("Reload".equals(action)){
+            onReload();
         }
     }
 
@@ -198,6 +201,12 @@ public class MainWindowController extends BaseController {
         });
         t.start();
     }
+
+    private void onReload() {
+        mStorageController.reload();
+        mFtpController.reload();
+    }
+
 
 
     @Override

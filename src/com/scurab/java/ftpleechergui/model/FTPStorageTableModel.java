@@ -70,6 +70,10 @@ public class FTPStorageTableModel extends AbstractTableModel {
         }
     }
 
+    public void reload(){
+        setRoot(mToLoad);
+    }
+
 
     private void threadWorkImpl() {
         try {

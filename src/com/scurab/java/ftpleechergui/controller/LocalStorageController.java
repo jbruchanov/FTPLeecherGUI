@@ -42,4 +42,8 @@ public class LocalStorageController extends TableController {
     public File getCurrentFolder() {
         return mCurrentFolder;
     }
+
+    public void reload() {
+        onOpenFolder(mTable, mCurrentFolder);
+    }
 }
