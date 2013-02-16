@@ -52,6 +52,7 @@ public class FTPStorageTableModel extends AbstractTableModel {
                 threadWorkImpl();
             }
         });
+        mThread.setName("FTPStorageModel");
         mThread.start();
         //init in thread
     }
