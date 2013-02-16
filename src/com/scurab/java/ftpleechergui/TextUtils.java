@@ -32,7 +32,7 @@ public class TextUtils {
      * @param value
      * @return
      */
-    public static String getNumberReadable(int value) {
+    public static String getNumberReadable(long value) {
         return NUMBER_FORMAT.format(value);
     }
 
