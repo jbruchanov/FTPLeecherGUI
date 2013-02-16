@@ -17,7 +17,7 @@ public abstract class TableController extends BaseController {
     }
 
     protected void onInitTable(JTable table) {
-        table.setFont(new Font(table.getFont().getFontName(), Font.PLAIN, 14));
+        table.setFont(new Font(table.getFont().getFontName(), Font.PLAIN, 12));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setShowGrid(true);
         table.setRowMargin(2);

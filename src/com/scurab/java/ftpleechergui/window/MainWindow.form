@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mContentPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="709" height="400"/>
+      <xy x="20" y="20" width="729" height="400"/>
     </constraints>
     <properties/>
     <border type="empty"/>
@@ -34,19 +34,6 @@
               <toolTipText resource-bundle="Labels" key="Disconnect"/>
             </properties>
           </component>
-          <component id="2f2f4" class="javax.swing.JButton" binding="mDownload">
-            <constraints/>
-            <properties>
-              <enabled value="false"/>
-              <text resource-bundle="Labels" key="Download"/>
-            </properties>
-          </component>
-          <component id="4089b" class="javax.swing.JButton" binding="mSettings">
-            <constraints/>
-            <properties>
-              <text resource-bundle="Labels" key="Settings"/>
-            </properties>
-          </component>
           <component id="91d37" class="javax.swing.JButton" binding="mReload">
             <constraints/>
             <properties>
@@ -56,6 +43,13 @@
           <component id="7738c" class="javax.swing.JToolBar$Separator">
             <constraints/>
             <properties/>
+          </component>
+          <component id="2f2f4" class="javax.swing.JButton" binding="mDownload">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text resource-bundle="Labels" key="Download"/>
+            </properties>
           </component>
           <component id="29c8f" class="javax.swing.JButton" binding="mPause">
             <constraints/>
@@ -79,17 +73,30 @@
               <text resource-bundle="Labels" key="Restart"/>
             </properties>
           </component>
+          <hspacer id="87713">
+            <constraints/>
+          </hspacer>
+          <component id="4089b" class="javax.swing.JButton" binding="mSettings">
+            <constraints/>
+            <properties>
+              <text resource-bundle="Labels" key="Settings"/>
+            </properties>
+          </component>
+          <component id="9a2e3" class="javax.swing.JButton" binding="mWeb">
+            <constraints/>
+            <properties>
+              <text value="Web"/>
+            </properties>
+            <clientProperties>
+              <html.disable class="java.lang.Boolean" value="false"/>
+            </clientProperties>
+          </component>
         </children>
       </toolbar>
-      <vspacer id="1eef8">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
       <splitpane id="2266c">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="200" height="200"/>
+            <preferred-size width="705" height="200"/>
           </grid>
         </constraints>
         <properties>
@@ -165,7 +172,7 @@
       <toolbar id="a8567" binding="mStatusBar">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="-1" height="20"/>
+            <preferred-size width="705" height="20"/>
           </grid>
         </constraints>
         <properties>

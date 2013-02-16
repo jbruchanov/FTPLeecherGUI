@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 public class MainWindowController extends BaseController {
 
@@ -43,7 +44,7 @@ public class MainWindowController extends BaseController {
         try {
             mWindow.setIconImage(ImageIO.read(getClass().getResourceAsStream("/assets/appicon.png")));
             mWindow.setTitle(getResourceLabel("AppTitle"));
-            mWindow.setMinimumSize(new Dimension(1024,600));
+            mWindow.setMinimumSize(new Dimension(250,150));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -66,6 +67,7 @@ public class MainWindowController extends BaseController {
         mWindow.getResume().addActionListener(action);
         mWindow.getPause().addActionListener(action);
         mWindow.getRestart().addActionListener(action);
+        mWindow.getWeb().addActionListener(action);
 
         mWindow.getQueue().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -111,6 +113,9 @@ public class MainWindowController extends BaseController {
             onResume();
         }else if ("Restart".equals(action)){
             onRestart();
+        }
+        else if ("Web".equals(action)){
+            onOpenWeb();
         }
     }
 
@@ -266,6 +271,14 @@ public class MainWindowController extends BaseController {
         mWindow.getDownload().setEnabled(selectedRows.length > 0 && selectedRows[0] != 0);
     }
 
+    private void onOpenWeb() {
+        try {
+            Desktop dt = Desktop.getDesktop();
+            dt.browse(URI.create(getResourceLabel("WebURL")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void showStatusBarMessage(String s) {
