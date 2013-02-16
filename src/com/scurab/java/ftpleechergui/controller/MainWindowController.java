@@ -86,26 +86,14 @@ public class MainWindowController extends BaseController {
 
     public void onAction(Object source, String action) {
         if ("OpenConnection".equals(action)) {
-            //show open ftp connection dialog
-            OpenConnectionDialog ocd = new OpenConnectionDialog(new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    OpenConnectionDialog o = (OpenConnectionDialog) e.getSource();
-                    onOpenConnection(o.getValues());
-                }
-            });
-            FTPConnection[] saved = getSavedConnections();
-            if (saved != null && saved.length > 0) {
-                ocd.initValues(saved[0]);
-            }
-            ocd.setVisible(true);
+           onOpeningConnection();
         } else if ("Disconnect".equals(action)) {
             onCloseConnection();
         } else if ("Download".equals(action)) {
             onDownload();
         } else if ("Settings".equals(action)){
             onSettings();
-        } else if ("Reload".equals(action)){
+        } else if ("Refresh".equals(action)){
             onReload();
         }else if ("Pause".equals(action)){
             onPause();
@@ -117,6 +105,18 @@ public class MainWindowController extends BaseController {
         else if ("Web".equals(action)){
             onOpenWeb();
         }
+    }
+
+    private void onOpeningConnection() {
+        //show open ftp connection dialog
+        OpenConnectionDialog ocd = new OpenConnectionDialog(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OpenConnectionDialog o = (OpenConnectionDialog) e.getSource();
+                onOpenConnection(o.getValues());
+            }
+        });
+        ocd.setVisible(true);
     }
 
     private void onSettings() {
@@ -194,8 +194,11 @@ public class MainWindowController extends BaseController {
      * @param config
      */
     public void onOpenConnection(FTPConnection config) {
-        onCloseConnection();
         try {
+            if(TextUtils.isNullOrEmpty(config.server)){
+                throw new Exception("Server is not defined!");
+            }
+            onCloseConnection();
             mFtpClient = FTPFactory.openFtpClient(config);
             mFtpController.setFTPClient(mFtpClient);
             application().setConnections(config);

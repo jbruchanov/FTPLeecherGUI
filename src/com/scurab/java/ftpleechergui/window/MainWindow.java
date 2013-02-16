@@ -129,46 +129,70 @@ public class MainWindow extends JFrame {
         mContentPanel.add(mHeaderBar, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
         mOpenConnection = new JButton();
         mOpenConnection.setActionCommand("OpenConnection");
-        this.$$$loadButtonText$$$(mOpenConnection, ResourceBundle.getBundle("Labels").getString("OpenConnection"));
+        mOpenConnection.setIcon(new ImageIcon(getClass().getResource("/assets/connect.png")));
+        mOpenConnection.setText("");
         mOpenConnection.setToolTipText(ResourceBundle.getBundle("Labels").getString("OpenConnection"));
         mHeaderBar.add(mOpenConnection);
         mDisconnect = new JButton();
-        this.$$$loadButtonText$$$(mDisconnect, ResourceBundle.getBundle("Labels").getString("Disconnect"));
+        mDisconnect.setActionCommand("Disconnect");
+        mDisconnect.setIcon(new ImageIcon(getClass().getResource("/assets/disconnect.png")));
+        mDisconnect.setText("");
         mDisconnect.setToolTipText(ResourceBundle.getBundle("Labels").getString("Disconnect"));
         mHeaderBar.add(mDisconnect);
         mReload = new JButton();
-        this.$$$loadButtonText$$$(mReload, ResourceBundle.getBundle("Labels").getString("Reload"));
+        mReload.setActionCommand("Refresh");
+        mReload.setIcon(new ImageIcon(getClass().getResource("/assets/refresh.png")));
+        mReload.setText("");
+        mReload.setToolTipText(ResourceBundle.getBundle("Labels").getString("Refresh"));
         mHeaderBar.add(mReload);
         final JToolBar.Separator toolBar$Separator1 = new JToolBar.Separator();
         mHeaderBar.add(toolBar$Separator1);
         mDownload = new JButton();
+        mDownload.setActionCommand("Download");
         mDownload.setEnabled(false);
-        this.$$$loadButtonText$$$(mDownload, ResourceBundle.getBundle("Labels").getString("Download"));
+        mDownload.setIcon(new ImageIcon(getClass().getResource("/assets/download.png")));
+        mDownload.setText("");
+        mDownload.setToolTipText(ResourceBundle.getBundle("Labels").getString("Download"));
         mHeaderBar.add(mDownload);
         mPause = new JButton();
+        mPause.setActionCommand("Pause");
         mPause.setEnabled(false);
-        this.$$$loadButtonText$$$(mPause, ResourceBundle.getBundle("Labels").getString("Pause"));
+        mPause.setIcon(new ImageIcon(getClass().getResource("/assets/pause.png")));
+        mPause.setText("");
+        mPause.setToolTipText(ResourceBundle.getBundle("Labels").getString("Pause"));
         mHeaderBar.add(mPause);
         mResume = new JButton();
+        mResume.setActionCommand("Resume");
         mResume.setEnabled(false);
-        this.$$$loadButtonText$$$(mResume, ResourceBundle.getBundle("Labels").getString("Resume"));
+        mResume.setIcon(new ImageIcon(getClass().getResource("/assets/resume.png")));
+        mResume.setInheritsPopupMenu(false);
+        mResume.setText("");
+        mResume.setToolTipText(ResourceBundle.getBundle("Labels").getString("Resume"));
         mHeaderBar.add(mResume);
         mRestart = new JButton();
         mRestart.setActionCommand("Restart");
         mRestart.setEnabled(false);
-        this.$$$loadButtonText$$$(mRestart, ResourceBundle.getBundle("Labels").getString("Restart"));
+        mRestart.setIcon(new ImageIcon(getClass().getResource("/assets/restart.png")));
+        mRestart.setText("");
+        mRestart.setToolTipText(ResourceBundle.getBundle("Labels").getString("Restart"));
         mHeaderBar.add(mRestart);
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
         mHeaderBar.add(spacer1);
         mSettings = new JButton();
-        this.$$$loadButtonText$$$(mSettings, ResourceBundle.getBundle("Labels").getString("Settings"));
+        mSettings.setActionCommand("Settings");
+        mSettings.setIcon(new ImageIcon(getClass().getResource("/assets/settings.png")));
+        mSettings.setText("");
+        mSettings.setToolTipText(ResourceBundle.getBundle("Labels").getString("Settings"));
         mHeaderBar.add(mSettings);
         mWeb = new JButton();
-        mWeb.setText("Web");
+        mWeb.setActionCommand("Web");
+        mWeb.setIcon(new ImageIcon(getClass().getResource("/assets/web.png")));
+        mWeb.setText("");
+        mWeb.setToolTipText("Web");
         mWeb.putClientProperty("html.disable", Boolean.FALSE);
         mHeaderBar.add(mWeb);
         final JSplitPane splitPane1 = new JSplitPane();
-        splitPane1.setDividerLocation(300);
+        splitPane1.setDividerLocation(277);
         splitPane1.setDividerSize(5);
         splitPane1.setDoubleBuffered(false);
         splitPane1.setOrientation(0);
@@ -247,33 +271,6 @@ public class MainWindow extends JFrame {
         component.setText(result.toString());
         if (haveMnemonic) {
             component.setDisplayedMnemonic(mnemonic);
-            component.setDisplayedMnemonicIndex(mnemonicIndex);
-        }
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private void $$$loadButtonText$$$(AbstractButton component, String text) {
-        StringBuffer result = new StringBuffer();
-        boolean haveMnemonic = false;
-        char mnemonic = '\0';
-        int mnemonicIndex = -1;
-        for (int i = 0; i < text.length(); i++) {
-            if (text.charAt(i) == '&') {
-                i++;
-                if (i == text.length()) break;
-                if (!haveMnemonic && text.charAt(i) != '&') {
-                    haveMnemonic = true;
-                    mnemonic = text.charAt(i);
-                    mnemonicIndex = result.length();
-                }
-            }
-            result.append(text.charAt(i));
-        }
-        component.setText(result.toString());
-        if (haveMnemonic) {
-            component.setMnemonic(mnemonic);
             component.setDisplayedMnemonicIndex(mnemonicIndex);
         }
     }

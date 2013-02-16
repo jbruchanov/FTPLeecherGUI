@@ -23,21 +23,27 @@
             <constraints/>
             <properties>
               <actionCommand value="OpenConnection"/>
-              <text resource-bundle="Labels" key="OpenConnection"/>
+              <icon value="assets/connect.png"/>
+              <text value=""/>
               <toolTipText resource-bundle="Labels" key="OpenConnection"/>
             </properties>
           </component>
           <component id="97804" class="javax.swing.JButton" binding="mDisconnect">
             <constraints/>
             <properties>
-              <text resource-bundle="Labels" key="Disconnect"/>
+              <actionCommand value="Disconnect"/>
+              <icon value="assets/disconnect.png"/>
+              <text value=""/>
               <toolTipText resource-bundle="Labels" key="Disconnect"/>
             </properties>
           </component>
           <component id="91d37" class="javax.swing.JButton" binding="mReload">
             <constraints/>
             <properties>
-              <text resource-bundle="Labels" key="Reload"/>
+              <actionCommand value="Refresh"/>
+              <icon value="assets/refresh.png"/>
+              <text value=""/>
+              <toolTipText resource-bundle="Labels" key="Refresh"/>
             </properties>
           </component>
           <component id="7738c" class="javax.swing.JToolBar$Separator">
@@ -47,22 +53,32 @@
           <component id="2f2f4" class="javax.swing.JButton" binding="mDownload">
             <constraints/>
             <properties>
+              <actionCommand value="Download"/>
               <enabled value="false"/>
-              <text resource-bundle="Labels" key="Download"/>
+              <icon value="assets/download.png"/>
+              <text value=""/>
+              <toolTipText resource-bundle="Labels" key="Download"/>
             </properties>
           </component>
           <component id="29c8f" class="javax.swing.JButton" binding="mPause">
             <constraints/>
             <properties>
+              <actionCommand value="Pause"/>
               <enabled value="false"/>
-              <text resource-bundle="Labels" key="Pause"/>
+              <icon value="assets/pause.png"/>
+              <text value=""/>
+              <toolTipText resource-bundle="Labels" key="Pause"/>
             </properties>
           </component>
           <component id="6ce10" class="javax.swing.JButton" binding="mResume">
             <constraints/>
             <properties>
+              <actionCommand value="Resume"/>
               <enabled value="false"/>
-              <text resource-bundle="Labels" key="Resume"/>
+              <icon value="assets/resume.png"/>
+              <inheritsPopupMenu value="false"/>
+              <text value=""/>
+              <toolTipText resource-bundle="Labels" key="Resume"/>
             </properties>
           </component>
           <component id="c57e7" class="javax.swing.JButton" binding="mRestart">
@@ -70,7 +86,9 @@
             <properties>
               <actionCommand value="Restart"/>
               <enabled value="false"/>
-              <text resource-bundle="Labels" key="Restart"/>
+              <icon value="assets/restart.png"/>
+              <text value=""/>
+              <toolTipText resource-bundle="Labels" key="Restart"/>
             </properties>
           </component>
           <hspacer id="87713">
@@ -79,13 +97,19 @@
           <component id="4089b" class="javax.swing.JButton" binding="mSettings">
             <constraints/>
             <properties>
-              <text resource-bundle="Labels" key="Settings"/>
+              <actionCommand value="Settings"/>
+              <icon value="assets/settings.png"/>
+              <text value=""/>
+              <toolTipText resource-bundle="Labels" key="Settings"/>
             </properties>
           </component>
           <component id="9a2e3" class="javax.swing.JButton" binding="mWeb">
             <constraints/>
             <properties>
-              <text value="Web"/>
+              <actionCommand value="Web"/>
+              <icon value="assets/web.png"/>
+              <text value=""/>
+              <toolTipText value="Web"/>
             </properties>
             <clientProperties>
               <html.disable class="java.lang.Boolean" value="false"/>
@@ -100,7 +124,7 @@
           </grid>
         </constraints>
         <properties>
-          <dividerLocation value="300"/>
+          <dividerLocation value="277"/>
           <dividerSize value="5"/>
           <doubleBuffered value="false"/>
           <orientation value="0"/>
