@@ -32,4 +32,9 @@ public class Settings {
      * {@link org.apache.commons.net.ftp.FTP#BINARY_FILE_TYPE}, {@link org.apache.commons.net.ftp.FTP#ASCII_FILE_TYPE}
      */
     public int fileType = FTP.BINARY_FILE_TYPE;
+
+    /**
+     * Delete downloaded parts after successful merge
+     */
+    public boolean deletePartsAfterMerge = false;
 }
