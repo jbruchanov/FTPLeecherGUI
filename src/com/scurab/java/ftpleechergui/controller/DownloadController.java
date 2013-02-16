@@ -97,7 +97,9 @@ public class DownloadController extends TableController {
     }
 
     public void onSettingsChanged(){
-        mFactory = new FTPFactory(new FTPContext(mConfig).setSettings(transformSettings()));
+        if(mConfig != null){
+            mFactory = new FTPFactory(new FTPContext(mConfig).setSettings(transformSettings()));
+        }
     }
 
     private static FTPSettings transformSettings(){
