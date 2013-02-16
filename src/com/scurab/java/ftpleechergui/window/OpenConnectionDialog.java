@@ -1,6 +1,7 @@
 package com.scurab.java.ftpleechergui.window;
 
 import com.scurab.java.ftpleecher.FTPConnection;
+import com.scurab.java.ftpleechergui.Application;
 import com.scurab.java.ftpleechergui.TextUtils;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class OpenConnectionDialog extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setTitle(Application.getLabels().getString("OpenConnection"));
 
         setResizable(true);
         pack();

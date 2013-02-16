@@ -24,6 +24,7 @@ public class SettingsDialog extends JDialog {
     public SettingsDialog(final ActionListener okListener) {
         setContentPane(contentPane);
         setModal(true);
+        setTitle(Application.getLabels().getString("Settings"));
         pack();
         setMinimumSize(new Dimension(getWidth() + 50, getHeight()));
         getRootPane().setDefaultButton(buttonOK);
