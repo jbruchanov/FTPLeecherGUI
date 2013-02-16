@@ -29,7 +29,8 @@ public abstract class BaseController {
     }
 
     public void showStatusBarMessage(String s, int type) {
-        Application.getInstance().showStatusBarMessage(s, type);
+        //Application.getInstance().showStatusBarMessage(s, type);
+        JOptionPane.showMessageDialog(getView(), s, "", type);
     }
 
     public void showProgress(boolean value) {

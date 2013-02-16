@@ -35,7 +35,7 @@ public class LocalStorageController extends TableController {
             mTableModel.setRoot(f);
             mCurrentFolder = f;
         } catch (Exception e) {
-            showStatusBarMessage(e.getMessage());
+            showMessageBox(e.getMessage(), 0);
         }
     }
 
