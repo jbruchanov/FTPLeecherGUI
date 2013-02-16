@@ -1,8 +1,10 @@
 package com.scurab.java.ftpleechergui.controller;
 
 import com.scurab.java.ftpleecher.*;
+import com.scurab.java.ftpleechergui.Application;
 import com.scurab.java.ftpleechergui.adapter.FTPMasterTableAdapter;
 import com.scurab.java.ftpleechergui.model.DownloadTableModel;
+import com.scurab.java.ftpleechergui.model.Settings;
 import org.apache.commons.net.ftp.FTPFile;
 
 import javax.swing.*;
@@ -91,6 +93,20 @@ public class DownloadController extends TableController {
 
     public void setConfig(FTPConnection config) {
         mConfig = config;
-        mFactory = new FTPFactory(new FTPContext(config));
+        mFactory = new FTPFactory(new FTPContext(mConfig).setSettings(transformSettings()));
+    }
+
+    public void onSettingsChanged(){
+        mFactory = new FTPFactory(new FTPContext(mConfig).setSettings(transformSettings()));
+    }
+
+    private static FTPSettings transformSettings(){
+        FTPSettings fs = new FTPSettings();
+        Settings s = Application.getInstance().getSettings();
+        fs.bufferSize = s.bufferSize;
+        fs.fileType = s.fileType;
+        fs.globalPieceLength = s.globalPieceLength;
+        fs.resume = s.resume;
+        return fs;
     }
 }

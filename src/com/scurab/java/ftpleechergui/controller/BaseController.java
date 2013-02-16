@@ -16,58 +16,8 @@ import java.io.IOException;
 
 public abstract class BaseController {
 
-    public static final String CONNECTIONS_FILE = "connections.json";
-
-    private static FTPConnection[] mSavedConnections;
-
-    private static final Gson sGson = new GsonBuilder().setPrettyPrinting().create();
-
-    public BaseController() {
-        if (mSavedConnections == null) {
-            mSavedConnections = onLoadSavedConnections();
-        }
-    }
-
-    /**
-     * Load saved connections from connections.json file
-     *
-     * @return
-     */
-    protected FTPConnection[] onLoadSavedConnections() {
-        FTPConnection[] result = null;
-        try {
-            File f = new File(CONNECTIONS_FILE);
-            if (f.exists() && f.isFile()) {
-                String values = IOUtils.toString(new FileInputStream(f));
-                result = sGson.fromJson(values, FTPConnection[].class);
-            } else {
-                result = new FTPContext[0];
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-//            showStatusBarMessage(e.getMessage());
-            result = new FTPContext[0];
-        }
-        return result;
-    }
-
-    /**
-     * Save connections to connections.json file
-     *
-     * @param values
-     * @throws IOException
-     */
-    public void saveConnections(FTPConnection... values) throws IOException {
-        File f = new File(CONNECTIONS_FILE);
-        f.delete();
-        FileOutputStream fos = new FileOutputStream(f);
-        String json = sGson.toJson(values);
-        fos.write(json.getBytes());
-        fos.close();
-    }
-
     public FTPConnection[] getSavedConnections() {
-        return mSavedConnections;
+        return application().getConnections();
     }
 
     public String getResourceLabel(String key) {

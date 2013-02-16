@@ -4,8 +4,10 @@ import com.scurab.java.ftpleecher.FTPConnection;
 import com.scurab.java.ftpleecher.FTPFactory;
 import com.scurab.java.ftpleecher.FTPLeechMaster;
 import com.scurab.java.ftpleechergui.TextUtils;
+import com.scurab.java.ftpleechergui.model.Settings;
 import com.scurab.java.ftpleechergui.window.MainWindow;
 import com.scurab.java.ftpleechergui.window.OpenConnectionDialog;
+import com.scurab.java.ftpleechergui.window.SettingsDialog;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -55,6 +57,7 @@ public class MainWindowController extends BaseController {
         mWindow.getOpenConnection().addActionListener(action);
         mWindow.getDisconnect().addActionListener(action);
         mWindow.getDownload().addActionListener(action);
+        mWindow.getSettings().addActionListener(action);
     }
 
     public void onAction(Object source, String action) {
@@ -76,7 +79,24 @@ public class MainWindowController extends BaseController {
             onCloseConnection();
         } else if ("Download".equals(action)) {
             onDownload();
+        } else if ("Settings".equals(action)){
+            onSettings();
         }
+    }
+
+    private void onSettings() {
+        SettingsDialog sd = new SettingsDialog(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SettingsDialog d = (SettingsDialog) e.getSource();
+                Settings s = d.getSettings();
+                application().setSettings(s);
+                mDownloadController.onSettingsChanged();
+                mMaster.setWorkingThreads(s.threads);
+            }
+        });
+        sd.setSettings(application().getSettings());
+        sd.setVisible(true);
     }
 
     public void onDownload() {
@@ -131,7 +151,7 @@ public class MainWindowController extends BaseController {
         try {
             mFtpClient = FTPFactory.openFtpClient(config);
             mFtpController.setFTPClient(mFtpClient);
-            saveConnections(config);
+            application().setConnections(config);
             mDownloadController.setConfig(config);
         } catch (Exception e) {
             showError(e.getMessage());

@@ -40,6 +40,12 @@
               <text resource-bundle="Labels" key="Download"/>
             </properties>
           </component>
+          <component id="4089b" class="javax.swing.JButton" binding="mSettings">
+            <constraints/>
+            <properties>
+              <text resource-bundle="Labels" key="Settings"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
       <vspacer id="1eef8">

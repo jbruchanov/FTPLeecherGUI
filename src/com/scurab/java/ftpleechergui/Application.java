@@ -1,8 +1,17 @@
 package com.scurab.java.ftpleechergui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.scurab.java.ftpleecher.FTPConnection;
 import com.scurab.java.ftpleecher.FTPLeechMaster;
 import com.scurab.java.ftpleechergui.controller.ApplicationController;
+import com.scurab.java.ftpleechergui.model.Settings;
+import org.apache.commons.io.IOUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 /**
@@ -47,6 +56,11 @@ public class Application {
      */
     public void start() {
         onLoadResources();
+        mSettings = onLoadSettings();
+        if(mSettings == null){
+            setSettings(new Settings());
+        }
+        mSavedConnections = onLoadSavedConnections();
         mMaster = new FTPLeechMaster();
 
         mAppController = new ApplicationController();
@@ -83,6 +97,105 @@ public class Application {
      */
     public FTPLeechMaster getMaster() {
         return mMaster;
+    }
+
+    public FTPConnection[] getConnections(){
+        return mSavedConnections;
+    }
+
+    public Settings getSettings(){
+        return mSettings;
+    }
+
+    public void setSettings(Settings s){
+        mSettings = s;
+        try {
+            save(SETTINGS_FILE, s);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showStatusBarMessage("Unable to save settings", 0);
+        }
+    }
+
+    public void setConnections(FTPConnection... conns){
+        mSavedConnections = conns;
+        try {
+            save(CONNECTIONS_FILE, conns);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showStatusBarMessage("Unable to save connection", 0);
+        }
+    }
+
+
+    //region Settings and connections
+
+    public static final String CONNECTIONS_FILE = "connections.json";
+
+    public static final String SETTINGS_FILE = "settings.json";
+
+    private FTPConnection[] mSavedConnections;
+
+    private Settings mSettings;
+
+    private static final Gson sGson = new GsonBuilder().setPrettyPrinting().create();
+    /**
+     * Load saved connections from connections.json file
+     *
+     * @return
+     */
+    protected FTPConnection[] onLoadSavedConnections() {
+        FTPConnection[] result = null;
+        try {
+            result = loadJson(CONNECTIONS_FILE, FTPConnection[].class);
+        } catch (Exception e) {
+            result = new FTPConnection[0];
+        }
+        return result;
+    }
+
+    /**
+     * Load settings from settings.json
+     * @return
+     */
+    private Settings onLoadSettings() {
+        Settings result = null;
+        try {
+            result = loadJson(SETTINGS_FILE, Settings.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * Save collection to json file
+     *
+     * @param file
+     * @param value
+     * @throws java.io.IOException
+     */
+    public void save(String file, Object value) throws IOException {
+        File f = new File(file);
+        f.delete();
+        FileOutputStream fos = new FileOutputStream(f);
+        String json = sGson.toJson(value);
+        fos.write(json.getBytes());
+        fos.close();
+    }
+
+    public static <T> T loadJson(String file, Class<T> clazz){
+        T result = null;
+        try {
+            File f = new File(file);
+            if (f.exists() && f.isFile()) {
+                String values = IOUtils.toString(new FileInputStream(f));
+                result = sGson.fromJson(values, clazz);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
 
