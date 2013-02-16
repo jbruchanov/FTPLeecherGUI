@@ -25,14 +25,19 @@ public class FTPController extends TableController {
         mTableModel = new FTPStorageTableModel();
         mTable.setModel(mTableModel);
         mTable.getColumnModel().getColumn(0).setMaxWidth(30);
-        mTable.getColumnModel().getColumn(2).setPreferredWidth(90);
-        mTable.getColumnModel().getColumn(2).setMaxWidth(150);
+        mTable.getColumnModel().getColumn(2).setPreferredWidth(120);
+        mTable.getColumnModel().getColumn(2).setMaxWidth(200);
 
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
         mTable.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
         bind();
-        createMenu();
+    }
+
+    @Override
+    protected void onInitTable(JTable table) {
+        super.onInitTable(table);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     private void bind() {
@@ -62,19 +67,6 @@ public class FTPController extends TableController {
     public void setFTPClient(FTPClient client) {
         mClient = client;
         mTableModel.setFTPClient(mClient);
-    }
-
-    private void createMenu() {
-        mMenu = new JPopupMenu();
-        mMenu.add(getResourceLabel("Open"));
-        mMenu.add(getResourceLabel("Download"));
-    }
-
-    @Override
-    public void onShowContextMenu(JTable table, MouseEvent e) {
-//        FTPFile f = mTableModel.getItem(table.getSelectedRow());
-//        mMenu.setLabel(f != null ? f.getName() : "");
-//        mMenu.show(mTable, e.getX(), e.getY());
     }
 
     /**

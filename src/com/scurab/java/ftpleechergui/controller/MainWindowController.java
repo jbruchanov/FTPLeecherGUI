@@ -3,6 +3,7 @@ package com.scurab.java.ftpleechergui.controller;
 import com.scurab.java.ftpleecher.FTPConnection;
 import com.scurab.java.ftpleecher.FTPFactory;
 import com.scurab.java.ftpleecher.FTPLeechMaster;
+import com.scurab.java.ftpleecher.FatalFTPException;
 import com.scurab.java.ftpleechergui.TextUtils;
 import com.scurab.java.ftpleechergui.model.Settings;
 import com.scurab.java.ftpleechergui.window.MainWindow;
@@ -101,17 +102,29 @@ public class MainWindowController extends BaseController {
 
     public void onDownload() {
         try {
-            FTPFile[] selection = mFtpController.getSelectedItems();
+            final FTPFile[] selection = mFtpController.getSelectedItems();
             if (selection.length == 0 || selection[0] == null) {
                 throw new Exception(getResourceLabel("NoSelectedItem"));
             } else {
-                File to = mStorageController.getCurrentFolder();
+                final File to = mStorageController.getCurrentFolder();
                 if (to == null) {
                     throw new Exception(getResourceLabel("SelectDestination"));
                 }
-
-                String pwd = getFtpPwd();
-                mDownloadController.onDownloadItem(pwd, selection[0], to.getAbsolutePath());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            showProgress(true);
+                            final String pwd = getFtpPwd();
+                            for(FTPFile file : selection){
+                                mDownloadController.onDownloadItem(pwd, file, to.getAbsolutePath());
+                            }
+                        } catch (Exception e) {
+                            showError(e.getMessage());
+                        }
+                        showProgress(false);
+                    }
+                }).start();
             }
         } catch (Exception e) {
             showError(e.getMessage());

@@ -46,6 +46,34 @@
               <text resource-bundle="Labels" key="Settings"/>
             </properties>
           </component>
+          <component id="91d37" class="javax.swing.JButton" binding="mReload">
+            <constraints/>
+            <properties>
+              <text resource-bundle="Labels" key="Reload"/>
+            </properties>
+          </component>
+          <component id="7738c" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="29c8f" class="javax.swing.JButton" binding="mButton1" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Button"/>
+            </properties>
+          </component>
+          <component id="6ce10" class="javax.swing.JButton" binding="mButton2" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Button"/>
+            </properties>
+          </component>
+          <component id="c57e7" class="javax.swing.JButton" binding="mButton3" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Button"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
       <vspacer id="1eef8">
