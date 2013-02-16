@@ -201,7 +201,6 @@ public class MainWindowController extends BaseController {
             onCloseConnection();
             mFtpClient = FTPFactory.openFtpClient(config);
             mFtpController.setFTPClient(mFtpClient);
-            application().setConnections(config);
             mDownloadController.setConfig(config);
         } catch (Exception e) {
             showError(e.getMessage());
