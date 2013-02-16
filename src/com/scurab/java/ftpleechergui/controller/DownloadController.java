@@ -76,7 +76,7 @@ public class DownloadController extends TableController {
 
     @Override
     protected void onInitTable(JTable table) {
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table.setShowGrid(true);
     }
 
@@ -111,5 +111,30 @@ public class DownloadController extends TableController {
         fs.globalPieceLength = s.globalPieceLength;
         fs.resume = s.resume;
         return fs;
+    }
+
+    public void onPause(int[] selectedRows) {
+        setPause(selectedRows, true);
+    }
+
+    public void onResume(int[] selectedRows) {
+        setPause(selectedRows, false);
+    }
+
+    private void setPause(int[] rows, boolean b) {
+        for (int i = 0; i < rows.length; i++) {
+            try{
+                mAdapter.getItem(rows[i]).setPause(b);
+            }catch(IllegalStateException e){
+                //throw nonpausable exception only if it's on 1 item
+                if(rows.length == 1){
+                    throw e;
+                }
+            }
+        }
+    }
+
+    public void onRestart(int selectedRow) {
+        mAdapter.getItem(selectedRow).restart();
     }
 }

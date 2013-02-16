@@ -14,6 +14,8 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +62,16 @@ public class MainWindowController extends BaseController {
         mWindow.getDownload().addActionListener(action);
         mWindow.getSettings().addActionListener(action);
         mWindow.getReload().addActionListener(action);
+        mWindow.getResume().addActionListener(action);
+        mWindow.getPause().addActionListener(action);
+        mWindow.getRestart().addActionListener(action);
+
+        mWindow.getQueue().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                onQueueSelectionChange(mWindow.getQueue().getSelectedRows());
+            }
+        });
     }
 
     public void onAction(Object source, String action) {
@@ -85,6 +97,12 @@ public class MainWindowController extends BaseController {
             onSettings();
         } else if ("Reload".equals(action)){
             onReload();
+        }else if ("Pause".equals(action)){
+            onPause();
+        }else if ("Resume".equals(action)){
+            onResume();
+        }else if ("Restart".equals(action)){
+            onRestart();
         }
     }
 
@@ -202,12 +220,39 @@ public class MainWindowController extends BaseController {
         t.start();
     }
 
-    private void onReload() {
+    public void onReload() {
         mStorageController.reload();
         mFtpController.reload();
     }
 
+    private void onPause() {
+        try {
+            mDownloadController.onPause(mWindow.getQueue().getSelectedRows());
+        } catch (Exception e) {
+            showMessageBox(e.getMessage(), 0);
+        }
+    }
 
+    private void onResume() {
+        try {
+            mDownloadController.onResume(mWindow.getQueue().getSelectedRows());
+        } catch (Exception e) {
+            showMessageBox(e.getMessage(), 0);
+        }
+    }
+
+    private void onRestart() {
+        try {
+            mDownloadController.onRestart(mWindow.getQueue().getSelectedRow());
+        } catch (Exception e) {
+            showMessageBox(e.getMessage(), 0);
+        }
+    }
+
+    public void onQueueSelectionChange(int [] selectedRows){
+        mWindow.setFtpButtonsEnabled(selectedRows.length > 0);
+        mWindow.getRestart().setEnabled(selectedRows.length == 1);
+    }
 
     @Override
     public void showStatusBarMessage(String s) {

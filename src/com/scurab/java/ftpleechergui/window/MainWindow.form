@@ -56,22 +56,26 @@
             <constraints/>
             <properties/>
           </component>
-          <component id="29c8f" class="javax.swing.JButton" binding="mButton1" default-binding="true">
+          <component id="29c8f" class="javax.swing.JButton" binding="mPause">
             <constraints/>
             <properties>
-              <text value="Button"/>
+              <enabled value="false"/>
+              <text resource-bundle="Labels" key="Pause"/>
             </properties>
           </component>
-          <component id="6ce10" class="javax.swing.JButton" binding="mButton2" default-binding="true">
+          <component id="6ce10" class="javax.swing.JButton" binding="mResume">
             <constraints/>
             <properties>
-              <text value="Button"/>
+              <enabled value="false"/>
+              <text resource-bundle="Labels" key="Resume"/>
             </properties>
           </component>
-          <component id="c57e7" class="javax.swing.JButton" binding="mButton3" default-binding="true">
+          <component id="c57e7" class="javax.swing.JButton" binding="mRestart">
             <constraints/>
             <properties>
-              <text value="Button"/>
+              <actionCommand value="Restart"/>
+              <enabled value="false"/>
+              <text resource-bundle="Labels" key="Restart"/>
             </properties>
           </component>
         </children>
@@ -114,7 +118,9 @@
                 <children>
                   <component id="5a74f" class="javax.swing.JTable" binding="mLocalStorage">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <doubleBuffered value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -127,7 +133,9 @@
                 <children>
                   <component id="60857" class="javax.swing.JTable" binding="mFtpStorage">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <doubleBuffered value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -137,7 +145,9 @@
             <constraints>
               <splitpane position="right"/>
             </constraints>
-            <properties/>
+            <properties>
+              <toolTipText value=""/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="9529b" class="javax.swing.JTable" binding="mQueue">

@@ -34,6 +34,7 @@ public class LocalStorageController extends TableController {
         try {
             mTableModel.setRoot(f);
             mCurrentFolder = f;
+            mTable.setToolTipText(f != null ? f.getAbsolutePath() : "");
         } catch (Exception e) {
             showMessageBox(e.getMessage(), 0);
         }
