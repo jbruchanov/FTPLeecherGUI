@@ -37,6 +37,7 @@
           <component id="2f2f4" class="javax.swing.JButton" binding="mDownload">
             <constraints/>
             <properties>
+              <enabled value="false"/>
               <text resource-bundle="Labels" key="Download"/>
             </properties>
           </component>

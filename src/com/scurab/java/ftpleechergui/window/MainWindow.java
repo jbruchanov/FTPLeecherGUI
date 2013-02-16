@@ -131,6 +131,7 @@ public class MainWindow extends JFrame {
         mDisconnect.setToolTipText(ResourceBundle.getBundle("Labels").getString("Disconnect"));
         mHeaderBar.add(mDisconnect);
         mDownload = new JButton();
+        mDownload.setEnabled(false);
         this.$$$loadButtonText$$$(mDownload, ResourceBundle.getBundle("Labels").getString("Download"));
         mHeaderBar.add(mDownload);
         mSettings = new JButton();

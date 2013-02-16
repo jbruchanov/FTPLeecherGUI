@@ -42,7 +42,8 @@ public class MainWindowController extends BaseController {
         mWindow = window;
         try {
             mWindow.setIconImage(ImageIO.read(getClass().getResourceAsStream("/assets/appicon.png")));
-            mWindow.setTitle("FTP Leecher");
+            mWindow.setTitle(getResourceLabel("AppTitle"));
+            mWindow.setMinimumSize(new Dimension(1024,600));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -70,6 +71,13 @@ public class MainWindowController extends BaseController {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 onQueueSelectionChange(mWindow.getQueue().getSelectedRows());
+            }
+        });
+
+        mWindow.getFtpStorage().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                onFtpSelectionChange(mWindow.getFtpStorage().getSelectedRows());
             }
         });
     }
@@ -253,6 +261,11 @@ public class MainWindowController extends BaseController {
         mWindow.setFtpButtonsEnabled(selectedRows.length > 0);
         mWindow.getRestart().setEnabled(selectedRows.length == 1);
     }
+
+    private void onFtpSelectionChange(int[] selectedRows) {
+        mWindow.getDownload().setEnabled(selectedRows.length > 0 && selectedRows[0] != 0);
+    }
+
 
     @Override
     public void showStatusBarMessage(String s) {
