@@ -2,6 +2,7 @@ package com.scurab.java.ftpleechergui.model;
 
 import com.scurab.java.ftpleechergui.Application;
 import com.scurab.java.ftpleechergui.TextUtils;
+import org.apache.commons.net.ftp.FTPFile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,6 +12,8 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class FileStorageTableModel extends AbstractTableModel {
 
@@ -45,6 +48,7 @@ public class FileStorageTableModel extends AbstractTableModel {
                     return pathname.isDirectory();
                 }
             })));
+            Collections.sort(data, mComparator);
             data.add(0, root.getParentFile());
             return data.toArray(new File[data.size()]);
         }
@@ -112,4 +116,14 @@ public class FileStorageTableModel extends AbstractTableModel {
             throw new Exception("Unable to open dir/drive: " + r.getAbsolutePath());
         }
     }
+
+    /**
+     * Help class for sorting
+     */
+    private Comparator<? super File> mComparator = new Comparator<File>() {
+        @Override
+        public int compare(File o1, File o2) {
+            return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+        }
+    };
 }

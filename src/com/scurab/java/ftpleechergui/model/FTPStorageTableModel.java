@@ -239,7 +239,7 @@ public class FTPStorageTableModel extends AbstractTableModel {
             int a = o1.isDirectory() ? 1 : 0;
             int b = o2.isDirectory() ? 1 : 0;
             if (a == b) {
-                return o1.getName().compareTo(o2.getName());
+                return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
             } else {
                 return b - a;
             }
