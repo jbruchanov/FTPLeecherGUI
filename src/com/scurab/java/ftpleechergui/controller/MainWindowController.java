@@ -147,7 +147,9 @@ public class MainWindowController extends BaseController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 OpenConnectionDialog o = (OpenConnectionDialog) e.getSource();
-                onOpenConnection(o.getValues());
+                if(onOpenConnection(o.getValues())){
+                    o.setVisible(false);
+                }
             }
         });
         ocd.setVisible(true);
@@ -227,7 +229,7 @@ public class MainWindowController extends BaseController {
      *
      * @param config
      */
-    public void onOpenConnection(FTPConnection config) {
+    public boolean onOpenConnection(FTPConnection config) {
         try {
             if(TextUtils.isNullOrEmpty(config.server)){
                 throw new Exception("Server is not defined!");
@@ -236,8 +238,10 @@ public class MainWindowController extends BaseController {
             mFtpClient = FTPFactory.openFtpClient(config);
             mFtpController.setFTPClient(mFtpClient);
             mDownloadController.setConfig(config);
+            return true;
         } catch (Exception e) {
             showError(e.getMessage());
+            return false;
         }
     }
 
