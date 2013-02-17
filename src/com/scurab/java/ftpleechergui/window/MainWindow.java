@@ -32,6 +32,7 @@ public class MainWindow extends JFrame {
     private JButton mResume;
     private JButton mRestart;
     private JButton mWeb;
+    private JLabel mETA;
 
     //endregion UI
 
@@ -103,6 +104,10 @@ public class MainWindow extends JFrame {
 
     public JButton getWeb() {
         return mWeb;
+    }
+
+    public JLabel getETA() {
+        return mETA;
     }
 
 
@@ -237,13 +242,23 @@ public class MainWindow extends JFrame {
         final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
         mStatusBar.add(spacer2);
         final JLabel label1 = new JLabel();
-        label1.setAlignmentX(0.0f);
-        label1.setMinimumSize(new Dimension(30, 14));
-        label1.setPreferredSize(new Dimension(50, 14));
-        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("Labels").getString("Speed"));
+        label1.setPreferredSize(new Dimension(30, 14));
+        this.$$$loadLabelText$$$(label1, ResourceBundle.getBundle("Labels").getString("ETA"));
         mStatusBar.add(label1);
+        mETA = new JLabel();
+        mETA.setPreferredSize(new Dimension(100, 0));
+        mETA.setText("");
+        mStatusBar.add(mETA);
+        final JToolBar.Separator toolBar$Separator3 = new JToolBar.Separator();
+        mStatusBar.add(toolBar$Separator3);
+        final JLabel label2 = new JLabel();
+        label2.setAlignmentX(0.0f);
+        label2.setMinimumSize(new Dimension(30, 14));
+        label2.setPreferredSize(new Dimension(40, 14));
+        this.$$$loadLabelText$$$(label2, ResourceBundle.getBundle("Labels").getString("Speed"));
+        mStatusBar.add(label2);
         mGlobalSpeed = new JLabel();
-        mGlobalSpeed.setPreferredSize(new Dimension(60, 14));
+        mGlobalSpeed.setPreferredSize(new Dimension(100, 14));
         mGlobalSpeed.setText("");
         mStatusBar.add(mGlobalSpeed);
     }

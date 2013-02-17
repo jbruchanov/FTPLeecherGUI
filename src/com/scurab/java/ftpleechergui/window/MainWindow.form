@@ -228,19 +228,39 @@
           <vspacer id="3a9ea">
             <constraints/>
           </vspacer>
+          <component id="f27d6" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <preferredSize width="30" height="14"/>
+              <text resource-bundle="Labels" key="ETA"/>
+            </properties>
+          </component>
+          <component id="f3c0f" class="javax.swing.JLabel" binding="mETA">
+            <constraints/>
+            <properties>
+              <preferredSize width="100" height="0"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="a5634" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties>
+              <preferredSize width="10" height="10"/>
+            </properties>
+          </component>
           <component id="50e03" class="javax.swing.JLabel">
             <constraints/>
             <properties>
               <alignmentX value="0.0"/>
               <minimumSize width="30" height="14"/>
-              <preferredSize width="50" height="14"/>
+              <preferredSize width="40" height="14"/>
               <text resource-bundle="Labels" key="Speed"/>
             </properties>
           </component>
           <component id="10dfe" class="javax.swing.JLabel" binding="mGlobalSpeed">
             <constraints/>
             <properties>
-              <preferredSize width="60" height="14"/>
+              <preferredSize width="100" height="14"/>
               <text value=""/>
             </properties>
           </component>

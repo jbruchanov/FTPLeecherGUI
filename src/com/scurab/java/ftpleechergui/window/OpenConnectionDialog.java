@@ -5,8 +5,13 @@ import com.scurab.java.ftpleechergui.Application;
 import com.scurab.java.ftpleechergui.TextUtils;
 
 import javax.swing.*;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -54,7 +59,6 @@ public class OpenConnectionDialog extends JDialog {
             }
         });
 
-// call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -62,7 +66,6 @@ public class OpenConnectionDialog extends JDialog {
             }
         });
 
-// call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
@@ -89,7 +92,18 @@ public class OpenConnectionDialog extends JDialog {
                 initValues(index < 1 ? new FTPConnection() : (FTPConnection) mConnections.getItemAt(index));
             }
         });
+
+        //port formatter
+        NumberFormat nf = NumberFormat.getIntegerInstance();
+        nf.setGroupingUsed(false);
+        NumberFormatter nff = new NumberFormatter(nf);
+        nff.setMinimum(1);
+        nff.setMaximum(65535);
+        DefaultFormatterFactory factory = new DefaultFormatterFactory(nff);
+        mPort.setFormatterFactory(factory);
+        mPort.setValue(21);
     }
+
 
     private void onDelete() {
         try {

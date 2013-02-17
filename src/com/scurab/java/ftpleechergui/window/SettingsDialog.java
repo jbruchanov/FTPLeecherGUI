@@ -66,7 +66,7 @@ public class SettingsDialog extends JDialog {
 
     private void init() {
         mBufferSize.setModel(new SpinnerNumberModel(64 * KBYTE, KBYTE, (int) KBYTE * KBYTE, 1));
-        mThreads.setModel(new SpinnerNumberModel(4, 1, 16, 1));
+        mThreads.setModel(new SpinnerNumberModel(4, 1, 64, 1));
         mPieceSize.setModel(new SpinnerNumberModel(15000000, 1000000, Integer.MAX_VALUE, 1));
 
         mDownloadMode.setModel(new DefaultComboBoxModel(new String[]{Application.getLabels().getString("ModeBinary"), Application.getLabels().getString("ModeText")}));

@@ -263,10 +263,17 @@ public class MainWindowController extends BaseController {
         Timer t = new Timer(DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mWindow.getGlobalSpeed().setText(TextUtils.getSpeedReadable(mMaster.getCurrentDownloadSpeed()));
+                onRefreshStats();
+
             }
         });
         t.start();
+    }
+
+    public void onRefreshStats(){
+        FTPLeechMaster.Statistics s = mMaster.getStatistics();
+        mWindow.getETA().setText(TextUtils.convertTime(s.eta));
+        mWindow.getGlobalSpeed().setText(TextUtils.getSpeedReadable(s.currentSpeed));
     }
 
     public void onReload() {
