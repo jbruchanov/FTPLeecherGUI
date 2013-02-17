@@ -64,6 +64,7 @@ public class Application {
         }
         mSavedConnections = onLoadSavedConnections();
         mMaster = new FTPLeechMaster();
+        mMaster.setWorkingThreads(mSettings.threads);
 
         mAppController = new ApplicationController();
         mAppController.start();
