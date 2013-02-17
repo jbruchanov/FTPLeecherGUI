@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 /**
@@ -119,6 +121,9 @@ public class Application {
 
     public void setConnections(FTPConnection... conns){
         mSavedConnections = conns;
+        if(conns != null && conns.length > 0){
+            Arrays.sort(mSavedConnections, new ConnSorter<FTPConnection>());
+        }
         try {
             save(CONNECTIONS_FILE, conns);
         } catch (IOException e) {
@@ -126,7 +131,6 @@ public class Application {
             showStatusBarMessage("Unable to save connection", 0);
         }
     }
-
 
     //region Settings and connections
 
@@ -196,6 +200,15 @@ public class Application {
             e.printStackTrace();
         }
         return result;
+    }
+
+
+    private static class ConnSorter<T extends FTPConnection> implements Comparator<FTPConnection>{
+
+        @Override
+        public int compare(FTPConnection o1, FTPConnection o2) {
+            return o1.server.compareTo(o2.server);
+        }
     }
 }
 
