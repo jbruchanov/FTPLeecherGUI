@@ -17,8 +17,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -39,6 +38,8 @@ public class MainWindowController extends BaseController {
 
     private FTPLeechMaster mMaster;
 
+    private TrayIcon mTrayIcon;
+
     public MainWindowController(MainWindow window) {
         mWindow = window;
         try {
@@ -50,6 +51,7 @@ public class MainWindowController extends BaseController {
         }
         bind();
         mWindow.setVisible(true);
+        initSysTray();
     }
 
     private void bind() {
@@ -82,6 +84,38 @@ public class MainWindowController extends BaseController {
                 onFtpSelectionChange(mWindow.getFtpStorage().getSelectedRows());
             }
         });
+    }
+
+    private void initSysTray(){
+        if(SystemTray.isSupported()){
+            mWindow.addWindowStateListener(new WindowStateListener() {
+                public void windowStateChanged(WindowEvent e) {
+                    if (e.getNewState() == JFrame.ICONIFIED) {
+                        try {
+                            if(mTrayIcon == null){
+                                mTrayIcon = new TrayIcon(ImageIO.read(getClass().getResourceAsStream("/assets/appicon.png")));mTrayIcon.setImageAutoSize(true);
+                                mTrayIcon.addMouseListener(new MouseAdapter() {
+                                    @Override
+                                    public void mouseClicked(MouseEvent e) {
+                                        mWindow.setVisible(true);
+                                        mWindow.setState(JFrame.NORMAL);
+                                        mWindow.toFront();
+                                        mWindow.requestFocusInWindow();
+                                        SystemTray.getSystemTray().remove(mTrayIcon);
+                                    }
+                                });
+                            }
+                            SystemTray.getSystemTray().add(mTrayIcon);
+                            mWindow.setVisible(false);
+                        } catch (AWTException e1) {
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public void onAction(Object source, String action) {
