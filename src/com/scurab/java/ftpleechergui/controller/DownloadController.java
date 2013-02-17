@@ -82,7 +82,7 @@ public class DownloadController extends TableController {
 
     public void onDownloadItem(String ftpFolder, FTPFile file, String destFolder) throws IOException, FatalFTPException {
         String url = ftpFolder + "/" + file.getName();
-        DownloadTask task = mFactory.createTask(url, destFolder);
+        DownloadTask task = mFactory.createTask(file, url, destFolder);
         task.setDeleteAfterMerge(application().getSettings().deletePartsAfterMerge);
         mTasks.add(task);
         mMaster.enqueue(task);
