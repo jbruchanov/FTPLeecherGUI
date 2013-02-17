@@ -303,7 +303,7 @@ public class MainWindowController extends BaseController {
 
     private void onRestart() {
         try {
-            mDownloadController.onRestart(mWindow.getQueue().getSelectedRow());
+            mDownloadController.onRestart(mWindow.getQueue().getSelectedRows());
         } catch (Exception e) {
             showMessageBox(e.getMessage(), 0);
         }
@@ -311,7 +311,7 @@ public class MainWindowController extends BaseController {
 
     public void onQueueSelectionChange(int [] selectedRows){
         mWindow.setFtpButtonsEnabled(selectedRows.length > 0);
-        mWindow.getRestart().setEnabled(selectedRows.length == 1);
+        mWindow.getRestart().setEnabled(selectedRows.length > 0);
     }
 
     private void onFtpSelectionChange(int[] selectedRows) {

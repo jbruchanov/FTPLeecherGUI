@@ -134,7 +134,16 @@ public class DownloadController extends TableController {
         }
     }
 
-    public void onRestart(int selectedRow) {
-        mAdapter.getItem(selectedRow).restart();
+    public void onRestart(int[] rows) {
+        for (int i = 0; i < rows.length; i++) {
+            try{
+                mAdapter.getItem(rows[i]).restart();
+            }catch(IllegalStateException e){
+                //throw nonrestaratable exception only if it's on 1 item
+                if(rows.length == 1){
+                    throw e;
+                }
+            }
+        }
     }
 }
