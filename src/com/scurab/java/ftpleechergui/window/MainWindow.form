@@ -126,7 +126,7 @@
         <properties>
           <dividerLocation value="277"/>
           <dividerSize value="5"/>
-          <doubleBuffered value="false"/>
+          <doubleBuffered value="true"/>
           <orientation value="0"/>
         </properties>
         <border type="none"/>
