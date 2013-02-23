@@ -29,7 +29,8 @@ public class DownloadTableCellRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         DownloadTableModel model = (DownloadTableModel)table.getModel();
         Component c = super.getTableCellRendererComponent(table, formatValue(value, column), isSelected, hasFocus, row, column);
-        c.setBackground(getColor(model.getItemAtIndex(row).getFtpState(), row));
+        int sRow = table.convertRowIndexToModel(row);
+        c.setBackground(getColor(model.getItemAtIndex(sRow).getFtpState(), row));
         return c;
     }
 
@@ -37,12 +38,14 @@ public class DownloadTableCellRenderer extends DefaultTableCellRenderer {
         switch (value){
             case Downloading:
             case Merging:
+            case Paused:
                 return LIGHT_YELLOW;
             case Downloaded:
             case Finished:
                 return LIGHT_GREEN;
             case Error:
             case FatalError:
+            case WaitingForRetry:
                 return LIGHT_RED;
             default:
                 return row % 2 == 0 ? Color.WHITE : WHITE_SMOKE;
