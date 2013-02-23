@@ -5,11 +5,14 @@ import com.scurab.java.ftpleechergui.Application;
 import com.scurab.java.ftpleechergui.adapter.FTPMasterTableAdapter;
 import com.scurab.java.ftpleechergui.model.DownloadTableModel;
 import com.scurab.java.ftpleechergui.model.Settings;
+import com.scurab.java.ftpleechergui.table.DownloadTableCellRenderer;
 import org.apache.commons.net.ftp.FTPFile;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class DownloadController extends TableController {
     private DownloadTableModel mTableModel;
 
     private FTPMasterTableAdapter mAdapter;
+    private DefaultRowSorter mRowSorter;
 
     public DownloadController(JTable table, FTPLeechMaster master) {
         super(table);
@@ -40,6 +44,12 @@ public class DownloadController extends TableController {
         mTableModel = new DownloadTableModel(mAdapter);
         mTable.setModel(mTableModel);
         setWidths();
+
+        //init renderer
+        DownloadTableCellRenderer dtc = new DownloadTableCellRenderer();
+        for (int i = 0, n = mTableModel.getColumnCount(); i < n; i++) {
+            mTable.getColumnModel().getColumn(i).setCellRenderer(dtc);
+        }
     }
 
     private void setWidths() {
@@ -78,6 +88,9 @@ public class DownloadController extends TableController {
     protected void onInitTable(JTable table) {
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table.setShowGrid(true);
+
+        //add row sorting support
+        table.setAutoCreateRowSorter(true);
     }
 
     public void onDownloadItem(String ftpFolder, FTPFile file, String destFolder) throws IOException, FatalFTPException {
@@ -134,16 +147,20 @@ public class DownloadController extends TableController {
         }
     }
 
-    public void onRestart(int[] rows) {
-        for (int i = 0; i < rows.length; i++) {
-            try{
-                mAdapter.getItem(rows[i]).restart();
-            }catch(IllegalStateException e){
-                //throw nonrestaratable exception only if it's on 1 item
-                if(rows.length == 1){
-                    throw e;
+    public void onRestart(final int[] rows) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < rows.length; i++) {
+                    try{
+                        mAdapter.getItem(rows[i]).restart();
+                    }catch(IllegalStateException e){
+                        //throw nonrestaratable exception only if it's on 1 item
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
+        },"RestartThread");
+        t.start();
     }
 }

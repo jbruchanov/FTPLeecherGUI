@@ -50,19 +50,37 @@ public class DownloadTableModel extends AbstractTableModel {
             case 2:
                 return config.fileName;
             case 3:
-                return config.parts != 1 ? String.format("%03d", config.part) : "";
+                return config.parts != 1 ? config.part : 0;
             case 4:
-                return TextUtils.getNumberReadable(config.currentPieceLength);
+                return config.currentPieceLength;
             case 5:
-                return TextUtils.getNumberReadable((int) thread.getDownloaded());
+                return thread.getDownloaded();
             case 6:
-                return ((int) ((thread.getDownloaded() / (float) config.currentPieceLength) * 100)) + "%";
+                return ((int) ((thread.getDownloaded() / (float) config.currentPieceLength) * 100));
             case 7:
-                return TextUtils.getSpeedReadable(thread.getSpeed());
+                return thread.getSpeed();
             case 8:
                 return getException(thread.getException());
             default:
                 return "Not implemented";
+        }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+            case 3:
+            case 6:
+            case 7:
+                return Integer.class;
+            case 4:
+            case 5:
+                return Long.class;
+            case 1:
+                return FTPDownloadThread.State.class;
+            default:
+                return String.class;
         }
     }
 
@@ -96,5 +114,9 @@ public class DownloadTableModel extends AbstractTableModel {
         }
     }
 
+
+    public FTPDownloadThread getItemAtIndex(int index){
+        return mAdapter.getItem(index);
+    }
 
 }

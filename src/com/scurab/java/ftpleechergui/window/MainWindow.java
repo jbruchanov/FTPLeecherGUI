@@ -199,7 +199,7 @@ public class MainWindow extends JFrame {
         final JSplitPane splitPane1 = new JSplitPane();
         splitPane1.setDividerLocation(277);
         splitPane1.setDividerSize(5);
-        splitPane1.setDoubleBuffered(false);
+        splitPane1.setDoubleBuffered(true);
         splitPane1.setOrientation(0);
         mContentPanel.add(splitPane1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(705, 200), null, 0, false));
         final JSplitPane splitPane2 = new JSplitPane();
