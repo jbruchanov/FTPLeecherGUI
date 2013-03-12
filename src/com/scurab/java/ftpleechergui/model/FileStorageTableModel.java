@@ -32,7 +32,7 @@ public class FileStorageTableModel extends AbstractTableModel {
         try {
             mFolderIcon.setImage(ImageIO.read(getClass().getResourceAsStream("/assets/folder.png")));
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         mRoot = root;
         mData = getDirs(mRoot);

@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
  * User: Joe Scurab
  * Date: 12.2.13
  * Time: 19:29
- * To change this template use File | Settings | File Templates.
  */
 public class MainWindow extends JFrame {
 

@@ -16,7 +16,7 @@ public class FTPMasterTableAdapter implements NotificationAdapter {
 
     private FTPLeechMaster mMaster;
 
-    private List<DownloadTableModel> mObservers;
+    private final List<DownloadTableModel> mObservers = new ArrayList<DownloadTableModel>();
 
     public FTPMasterTableAdapter(FTPLeechMaster master) {
         if (master == null) {
@@ -71,9 +71,6 @@ public class FTPMasterTableAdapter implements NotificationAdapter {
      * @param downloadTableModel
      */
     public void registerObserver(DownloadTableModel downloadTableModel) {
-        if (mObservers == null) {
-            mObservers = new ArrayList<DownloadTableModel>();
-        }
         synchronized (mObservers) {
             mObservers.add(downloadTableModel);
         }

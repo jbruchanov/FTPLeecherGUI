@@ -47,7 +47,7 @@ public class MainWindowController extends BaseController {
             mWindow.setTitle(getResourceLabel("AppTitle"));
             mWindow.setMinimumSize(new Dimension(250,150));
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         bind();
         mWindow.setVisible(true);

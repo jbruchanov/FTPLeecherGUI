@@ -72,7 +72,6 @@ public class DownloadTableCellRenderer extends DefaultTableCellRenderer {
             case 3:
                 return ((Integer)value) + 1;
             case 4:
-                return TextUtils.getNumberReadable((Long) value);
             case 5:
                 return TextUtils.getNumberReadable((Long) value);
             case 6:

@@ -80,7 +80,7 @@ public class FTPStorageTableModel extends AbstractTableModel {
             mFileIcon.setImage(ImageIO.read(getClass().getResourceAsStream("/assets/file.png")));
             mFolderIcon.setImage(ImageIO.read(getClass().getResourceAsStream("/assets/folder.png")));
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         while (mIsRunning) {
             synchronized (mThread) {
@@ -88,7 +88,7 @@ public class FTPStorageTableModel extends AbstractTableModel {
                     init();
                     mThread.wait();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e.printStackTrace();
                 }
             }
         }
