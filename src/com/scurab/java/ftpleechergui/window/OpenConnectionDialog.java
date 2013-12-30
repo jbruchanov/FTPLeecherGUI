@@ -131,8 +131,10 @@ public class OpenConnectionDialog extends JDialog {
     private void onLoadConnectios() {
         FTPConnection[] cons = Application.getInstance().getConnections();
         mConnections.addItem(null);
-        for (FTPConnection fc : cons) {
-            mConnections.addItem(fc);
+        if (cons != null) {
+            for (FTPConnection fc : cons) {
+                mConnections.addItem(fc);
+            }
         }
     }
 
