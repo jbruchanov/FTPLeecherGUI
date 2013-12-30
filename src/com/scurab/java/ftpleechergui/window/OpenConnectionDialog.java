@@ -6,12 +6,10 @@ import com.scurab.java.ftpleechergui.TextUtils;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -40,7 +38,7 @@ public class OpenConnectionDialog extends JDialog {
         setMinimumSize(new Dimension(getWidth(), getHeight()));
 
         setLocationRelativeTo(null);
-        onLoadConnectios();
+        onLoadConnections();
         if (okListener != null) {
             buttonOK.addActionListener(new AbstractAction() {
                 @Override
@@ -128,7 +126,7 @@ public class OpenConnectionDialog extends JDialog {
         }
     }
 
-    private void onLoadConnectios() {
+    private void onLoadConnections() {
         FTPConnection[] cons = Application.getInstance().getConnections();
         mConnections.addItem(null);
         if (cons != null) {
