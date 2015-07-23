@@ -87,7 +87,7 @@ public class SettingsDialog extends JDialog {
         s.resume = !mDeleteOnRestart.isSelected();
         s.threads = ((SpinnerNumberModel) mThreads.getModel()).getNumber().intValue();
         s.bufferSize = ((SpinnerNumberModel) mBufferSize.getModel()).getNumber().intValue();
-        s.globalPieceLength = ((SpinnerNumberModel) mPieceSize.getModel()).getNumber().intValue();
+        s.globalPieceLength = ((SpinnerNumberModel) mPieceSize.getModel()).getNumber().longValue();
         s.fileType = mDownloadMode.getSelectedIndex() == 1 ? FTP.ASCII_FILE_TYPE : FTP.BINARY_FILE_TYPE;
         s.deletePartsAfterMerge = mDeleteMerge.isSelected();
         return s;
