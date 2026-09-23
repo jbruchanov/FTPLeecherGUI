@@ -29,8 +29,7 @@ public abstract class BaseController {
     }
 
     public void showStatusBarMessage(String s, int type) {
-        //Application.getInstance().showStatusBarMessage(s, type);
-        JOptionPane.showMessageDialog(getView(), s, "", type);
+        Application.getInstance().showStatusBarMessage(s, type);
     }
 
     public void showProgress(boolean value) {
@@ -46,7 +45,19 @@ public abstract class BaseController {
     }
 
     public void showMessageBox(String msg, int type) {
-        JOptionPane.showMessageDialog(getView(), msg, "", type);
+        final String text = msg != null ? msg : getResourceLabel("UnknownError");
+        runOnUiThread(() -> JOptionPane.showMessageDialog(getView(), text, "", type));
+    }
+
+    /**
+     * Runs on the EDT; Swing touched from other threads shows blank, unclosable dialogs.
+     */
+    public static void runOnUiThread(Runnable r) {
+        if (SwingUtilities.isEventDispatchThread()) {
+            r.run();
+        } else {
+            SwingUtilities.invokeLater(r);
+        }
     }
 
     public Application application() {

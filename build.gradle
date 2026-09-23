@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.scurab'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    implementation project(':FTPLeecher')
+    implementation 'commons-io:commons-io:2.22.0'
+    implementation 'commons-net:commons-net:3.13.0'
+    implementation 'com.google.code.gson:gson:2.14.0'
+    implementation 'com.intellij:forms_rt:6.0.5'
+
+    testImplementation 'junit:junit:4.13.2'
+}

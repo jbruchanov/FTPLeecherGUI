@@ -31,7 +31,7 @@ public class Application {
 
     public static void main(String[] args) {
         sSelf = new Application();
-        sSelf.start();
+        javax.swing.SwingUtilities.invokeLater(sSelf::start);
     }
 
     public Application() {

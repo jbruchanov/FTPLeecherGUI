@@ -65,8 +65,11 @@ public class FTPStorageTableModel extends AbstractTableModel {
             newData = new FTPFile[0];
         }
         if (newData != null) {
-            mData = newData;
-            fireTableDataChanged();
+            final FTPFile[] data = newData;
+            SwingUtilities.invokeLater(() -> {
+                mData = data;
+                fireTableDataChanged();
+            });
         }
     }
 

@@ -3,7 +3,6 @@ package com.scurab.java.ftpleechergui.controller;
 import com.scurab.java.ftpleecher.FTPConnection;
 import com.scurab.java.ftpleecher.FTPFactory;
 import com.scurab.java.ftpleecher.FTPLeechMaster;
-import com.scurab.java.ftpleecher.FatalFTPException;
 import com.scurab.java.ftpleechergui.TextUtils;
 import com.scurab.java.ftpleechergui.model.Settings;
 import com.scurab.java.ftpleechergui.window.MainWindow;
@@ -334,12 +333,12 @@ public class MainWindowController extends BaseController {
 
     @Override
     public void showStatusBarMessage(String s, int type) {
-        mWindow.getStatusLabel().setText(s);
+        runOnUiThread(() -> mWindow.getStatusLabel().setText(s));
     }
 
     @Override
     public void showProgress(boolean value) {
-        mWindow.getProgressBar().setVisible(value);
+        runOnUiThread(() -> mWindow.getProgressBar().setVisible(value));
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.scurab.java.ftpleecher.FTPContext;
 import com.scurab.java.ftpleecher.FTPDownloadThread;
 import com.scurab.java.ftpleechergui.TextUtils;
 import com.scurab.java.ftpleechergui.model.DownloadTableModel;
-import sun.swing.DefaultLookup;
 
 import javax.swing.*;
 import javax.swing.border.Border;
